@@ -320,16 +320,25 @@ def train(args):
 
     model = AGDSCAE(with_attention=False).to(dev)
 
-    def stage_done(k):
-        return (out / f"ckpt_stage{k}.pt").exists()
+    def stage_state(k):
+        """(start_epoch, state_dict|None): resume mid-stage after disconnects."""
+        f = out / f"ckpt_stage{k}.pt"
+        if not f.exists():
+            return 0, None
+        ck = torch.load(f, map_location=dev)
+        return ck["epoch"] + 1, ck["state"]
 
     # ---- Stage 1: source pretraining -----------------------------------
-    if not stage_done(1):
+    ep0, st = stage_state(1)
+    if st is not None:
+        model.load_state_dict(st)
+    if ep0 < E:
         opt = torch.optim.AdamW(list(model.enc_t.parameters()) +
                                 list(model.dec.parameters()),
                                 lr=1e-3, weight_decay=1e-4)
-        sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=E)
-        for ep in range(E):
+        sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=E,
+                                                           last_epoch=ep0 - 1)
+        for ep in range(ep0, E):
             for x in src:
                 x = x.to(dev)
                 xh, _ = model(x)
@@ -341,9 +350,7 @@ def train(args):
             print(f"[stage1 ep{ep + 1}/{E}] loss={loss.item():.4f}", flush=True)
             save_ckpt(out / "ckpt_stage1.pt", model, 1, ep)
     else:
-        model.load_state_dict(torch.load(out / "ckpt_stage1.pt",
-                                         map_location=dev)["state"])
-        print("stage 1 checkpoint found, skipping")
+        print(f"stage 1 complete ({ep0} epochs), skipping")
 
     # freeze source encoder = copy of the pretrained encoder
     model.enc_s.load_state_dict(model.enc_t.state_dict())
@@ -351,12 +358,15 @@ def train(args):
         p.requires_grad_(False)
 
     # ---- Stage 2: OT alignment ------------------------------------------
-    if not stage_done(2):
+    ep0, st = stage_state(2)
+    if st is not None:
+        model.load_state_dict(st)
+    if ep0 < E:
         opt = torch.optim.AdamW(list(model.enc_t.parameters()) +
                                 list(model.dec.parameters()),
                                 lr=1e-4, weight_decay=1e-4)
         src_it = iter(src)
-        for ep in range(E):
+        for ep in range(ep0, E):
             for bi, x in enumerate(tgt):
                 x = x.to(dev)
                 xh, _ = model(x)
@@ -376,9 +386,7 @@ def train(args):
             print(f"[stage2 ep{ep + 1}/{E}] loss={loss.item():.4f}", flush=True)
             save_ckpt(out / "ckpt_stage2.pt", model, 2, ep)
     else:
-        model.load_state_dict(torch.load(out / "ckpt_stage2.pt",
-                                         map_location=dev)["state"])
-        print("stage 2 checkpoint found, skipping")
+        print(f"stage 2 complete ({ep0} epochs), skipping")
 
     # ---- Stage 3: attention-guided adaptation ---------------------------
     state = model.state_dict()
@@ -386,11 +394,14 @@ def train(args):
     model.load_state_dict(state, strict=False)
     for p in model.enc_s.parameters():
         p.requires_grad_(False)
-    if not stage_done(3):
+    ep0, st = stage_state(3)
+    if st is not None:
+        model.load_state_dict(st)
+    if ep0 < E:
         opt = torch.optim.AdamW([p for p in model.parameters()
                                  if p.requires_grad], lr=5e-5, weight_decay=1e-4)
         src_it = iter(src)
-        for ep in range(E):
+        for ep in range(ep0, E):
             for bi, x in enumerate(tgt):
                 x = x.to(dev)
                 xh, amaps = model(x)
