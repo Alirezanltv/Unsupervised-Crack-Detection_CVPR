@@ -70,6 +70,7 @@ def run_one(model_name: str, data: Path, out: Path, seed: int, image_size: int):
         abnormal_dir="test/images",
         mask_dir="test/masks",
         image_size=(image_size, image_size),
+        num_workers=2,
     )
     model = build_model(model_name)
     engine = Engine(default_root_dir=out / model_name / f"s{seed}")
@@ -84,12 +85,20 @@ def run_one(model_name: str, data: Path, out: Path, seed: int, image_size: int):
             np.save(maps_dir / f"{stem}.npy",
                     amap.squeeze().cpu().numpy().astype(np.float32))
 
-    # calibration maps from the held-out unlabeled folder
+    # calibration maps from the held-out unlabeled folder. Folder() cannot
+    # represent a masks-free segmentation dir, so use PredictDataset instead.
     calib_dir = out / model_name / f"s{seed}" / "calib"
     calib_dir.mkdir(parents=True, exist_ok=True)
-    calib_dm = Folder(name="calib", root=data, normal_dir="calib",
-                      image_size=(image_size, image_size))
-    for batch in engine.predict(model=model, datamodule=calib_dm):
+    try:
+        from anomalib.data import PredictDataset
+    except ImportError:
+        from anomalib.data.predict import PredictDataset
+    from torch.utils.data import DataLoader
+    ds = PredictDataset(path=data / "calib",
+                        image_size=(image_size, image_size))
+    dl = DataLoader(ds, batch_size=8, num_workers=2,
+                    collate_fn=getattr(ds, "collate_fn", None))
+    for batch in engine.predict(model=model, dataloaders=dl):
         for path, amap in zip(batch["image_path"], batch["anomaly_maps"]):
             np.save(calib_dir / f"{Path(path).stem}.npy",
                     amap.squeeze().cpu().numpy().astype(np.float32))
