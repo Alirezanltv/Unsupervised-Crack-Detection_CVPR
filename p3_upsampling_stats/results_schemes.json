@@ -1,0 +1,35 @@
+{
+  "nearest": {
+    "transition_width_px_mean": 10.338472001813647,
+    "transition_width_px_std": 6.323617201012442,
+    "grad_mag_at_edges": 0.2688363411666115,
+    "edge_density_pct": 2.3927490234375,
+    "orientation_kl_vs_native": 1.3528049825435313
+  },
+  "bilinear": {
+    "transition_width_px_mean": 12.628447508896798,
+    "transition_width_px_std": 3.9762856748110185,
+    "grad_mag_at_edges": 0.08253543870852521,
+    "edge_density_pct": 1.3302383422851562,
+    "orientation_kl_vs_native": 0.012368344631481688
+  },
+  "bicubic": {
+    "transition_width_px_mean": 10.826841753839306,
+    "transition_width_px_std": 3.7821780020853706,
+    "grad_mag_at_edges": 0.09696679549508543,
+    "edge_density_pct": 1.375360107421875,
+    "orientation_kl_vs_native": 0.00691152036568813
+  },
+  "lanczos": {
+    "transition_width_px_mean": 10.120708872046366,
+    "transition_width_px_std": 3.6144551194438863,
+    "grad_mag_at_edges": 0.10008952219731987,
+    "edge_density_pct": 1.3441925048828125,
+    "orientation_kl_vs_native": 0.00946520265242319
+  },
+  "native_reference": {
+    "transition_width_px_mean": 1.278620843561705,
+    "grad_mag_at_edges": 0.44642931118038937,
+    "edge_density_pct": 11.011607142857141
+  }
+}

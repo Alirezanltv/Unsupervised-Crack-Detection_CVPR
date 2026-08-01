@@ -1,0 +1,44 @@
+{
+  "transition_width_px": {
+    "native_mean": 1.278620843561705,
+    "native_std": 0.6372873842931839,
+    "up_mean": 10.826841753839306,
+    "up_std": 3.7821780020853706,
+    "ratio_up_over_native": 8.467593664186042
+  },
+  "grad_mag_at_edges": {
+    "native_mean": 0.44642931118038937,
+    "native_std": 0.029400624783396907,
+    "up_mean": 0.09696679549508543,
+    "up_std": 0.003256557588234061,
+    "ratio_up_over_native": 0.21720526199029952
+  },
+  "edge_density_pct": {
+    "native_mean": 11.011607142857141,
+    "native_std": 2.444935273295159,
+    "up_mean": 1.375360107421875,
+    "up_std": 0.30927090675778846,
+    "ratio_up_over_native": 0.12490094221296524
+  },
+  "stroke_width_frac": {
+    "native_mean": 0.10400370743067353,
+    "native_std": 0.034874804816028955,
+    "up_mean": 0.09506282108565157,
+    "up_std": 0.03163384635283979,
+    "ratio_up_over_native": 0.9140330035736299
+  },
+  "transition_width_frac": {
+    "native": 0.04566503012720375,
+    "up": 0.04229235060093479
+  },
+  "orientation": {
+    "kl_native_vs_up": 0.00691152036568813,
+    "pearson_r": 0.937306204663064
+  },
+  "config": {
+    "n_images": 1000,
+    "n_profile_images": 150,
+    "interp": "PIL BICUBIC single-step 28->256",
+    "canny": "sigma=1.0, low=50/255, high=150/255"
+  }
+}
