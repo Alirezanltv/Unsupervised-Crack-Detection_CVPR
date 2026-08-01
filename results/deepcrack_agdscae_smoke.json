@@ -1,0 +1,7 @@
+{
+  "purpose": "PIPELINE VALIDATION ONLY - NOT A PAPER NUMBER",
+  "config": "agdscae_ref.py smoke run: 2 epochs/stage, 2000-digit MNIST subset, seed 0, committed deepcrack splits (250/50/237)",
+  "run": "Google Colab T4, 2026-08-01",
+  "result": {"pixel_auroc": 0.7553, "pixel_ap": 0.2140, "miou_at_fixed_0.5": 0.2798, "f1": 0.1431, "precision": 0.0858, "recall": 0.8780, "mu": 0.1614, "delta": 0.1077},
+  "reading": "End-to-end train->dump->eval loop verified. 2-epoch model already clearly above chance (AUROC 0.755). Fixed-0.5 thresholding over-fires (recall 0.88, precision 0.09), same protocol behavior as the distance-map baselines; whether a fully trained model's sparser error maps rescue the fixed-0.5 protocol is exactly what the real 50-epoch run will answer."
+}
