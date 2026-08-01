@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+venv/
+.cache/
+runs/
+sweeps/
+gates_out/
+*.pt
+*.pth
+*.ckpt
+*.npy
+.ipynb_checkpoints/

@@ -1,0 +1,14 @@
+# Pinned loosely by major version; tighten after your first successful run.
+numpy>=1.26,<3
+scipy>=1.11
+pillow>=10
+scikit-image>=0.22
+scikit-learn>=1.4
+pandas>=2.1
+matplotlib>=3.8
+opencv-python-headless>=4.9
+# GPU stack -- match your CUDA; the paper used torch 1.12/CUDA 11.6 but
+# anomalib >= 1.0 needs a newer torch:
+torch>=2.1
+torchvision>=0.16
+anomalib>=1.0
