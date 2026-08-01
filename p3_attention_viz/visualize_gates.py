@@ -43,23 +43,28 @@ import numpy as np
 def load_model_and_gates(checkpoint: Path):
     """Return (model, get_gates) where get_gates(batch_tensor) -> [a_1..a_4].
 
-    Reference implementation using forward hooks -- adjust module paths:
-
-        import torch
-        model = torch.load(checkpoint, map_location="cuda").eval()
-        gates = []
-        def hook(_m, _inp, out):
-            gates.append(out.detach())          # out must be the sigmoid gate
-        for att in [model.att1, model.att2, model.att3, model.att4]:
-            att.gate_sigmoid.register_forward_hook(hook)
-        def get_gates(x):
-            gates.clear()
-            with torch.no_grad():
-                model(x.cuda())
-            return [g.cpu() for g in gates]
-        return model, get_gates
+    Wired to the reference implementation (p0_reproduce/agdscae_ref.py),
+    whose forward already returns the gate maps. If you are using a
+    different AG-DSCAE implementation, replace this with forward hooks on
+    your four attention modules that capture the sigmoid gate outputs.
     """
-    raise NotImplementedError("wire this to your AG-DSCAE implementation")
+    import sys
+    import torch
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "p0_reproduce"))
+    from agdscae_ref import AGDSCAE
+
+    dev = "cuda" if torch.cuda.is_available() else "cpu"
+    ck = torch.load(checkpoint, map_location=dev)
+    model = AGDSCAE(with_attention=True).to(dev)
+    model.load_state_dict(ck["state"])
+    model.eval()
+
+    def get_gates(x):
+        with torch.no_grad():
+            _, amaps = model(x.to(dev))
+        return [a.cpu() for a in amaps]
+
+    return model, get_gates
 
 
 def load_image(path: Path, size: int = 256) -> np.ndarray:
