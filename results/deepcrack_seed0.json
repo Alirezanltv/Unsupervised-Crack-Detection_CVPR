@@ -1,0 +1,8 @@
+{
+  "dataset": "DeepCrack (official test split, 237 images, pixel masks)",
+  "protocol": "option (a): trained on the DeepCrack train split (contains cracks), 200/50 train/calib after anomalib moved ~50 normals into its test set; maps scored at ground-truth resolution; mu/delta from 50 held-out unlabeled calib maps; fixed 0.5 after standardization; seed 0",
+  "source": "run on Google Colab T4, 2026-08-01, anomalib 1.1.1",
+  "patchcore": {"pixel_auroc": 0.8310, "pixel_ap": 0.1929, "miou_at_fixed_0.5": 0.1140, "f1_at_fixed_0.5": 0.0916, "precision": 0.0497, "recall": 0.9405, "mu": 0.3166, "delta": 0.0769},
+  "padim":     {"pixel_auroc": 0.9181, "pixel_ap": 0.3012, "miou_at_fixed_0.5": 0.3511, "f1_at_fixed_0.5": 0.1837, "precision": 0.1060, "recall": 0.9686, "mu": 0.4365, "delta": 0.0332},
+  "note": "The fixed-0.5 MIoU values are an artifact of applying the mean-threshold protocol to smooth distance-based score maps (recall ~0.95, precision ~0.1): the protocol was designed for sparse reconstruction-error maps. AUROC/AP are the valid cross-method numbers from this run. Do not put the MIoU column in a comparison table without per-method threshold handling."
+}
