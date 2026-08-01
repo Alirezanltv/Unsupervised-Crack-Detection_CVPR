@@ -27,10 +27,12 @@ colab_run.ipynb          run everything on Google Colab
 
 ## Status
 
-- `p3_upsampling_stats/` has been run (results.json, results_schemes.json,
-  and the figure are committed). Everything else is written and
-  syntax-checked but has not been run on real data yet — expect to adjust
-  anomalib API details and the model-interface stubs to your setup.
+- **The project is in a rebuild phase: see `p0_reproduce/RETRAIN_PLAN.md`
+  first.** Original checkpoints and splits were lost; all model-derived
+  results are being regenerated with committed deterministic splits.
+- Measured so far: `p3_upsampling_stats/` (MNIST analysis, results
+  committed) and `results/deepcrack_seed0.json` (PatchCore + PaDiM on the
+  DeepCrack test split, run on Colab).
 - Every method's anomaly maps are scored by the same engine
   (`common/eval_maps.py`), so numbers are directly comparable.
 
