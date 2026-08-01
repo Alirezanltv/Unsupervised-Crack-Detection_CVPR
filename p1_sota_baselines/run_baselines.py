@@ -71,6 +71,7 @@ def run_one(model_name: str, data: Path, out: Path, seed: int, image_size: int):
         mask_dir="test/masks",
         image_size=(image_size, image_size),
         num_workers=2,
+        val_split_mode="same_as_test",
     )
     model = build_model(model_name)
     engine = Engine(default_root_dir=out / model_name / f"s{seed}")

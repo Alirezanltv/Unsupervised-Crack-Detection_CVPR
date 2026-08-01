@@ -45,6 +45,13 @@ def load_mask(path: Path) -> np.ndarray:
     return (m > 127).astype(np.uint8) if m.max() > 1 else m.astype(np.uint8)
 
 
+def resize_map(raw: np.ndarray, shape) -> np.ndarray:
+    """Bilinear-upsample an anomaly map to ground-truth resolution (the
+    standard convention when models emit maps at their working size)."""
+    from scipy.ndimage import zoom
+    return zoom(raw, (shape[0] / raw.shape[0], shape[1] / raw.shape[1]), order=1)
+
+
 def standardize(raw: np.ndarray, mu: float, delta: float) -> np.ndarray:
     z = (raw - mu) / max(delta, 1e-12)
     return 1.0 / (1.0 + np.exp(-z))          # sigmoid, as in Eq. (13)
@@ -98,7 +105,7 @@ def main():
     for mp, gt_path in find_pairs(args.maps, args.masks):
         raw, gt = load_map(mp), load_mask(gt_path)
         if raw.shape != gt.shape:
-            raise SystemExit(f"shape mismatch {mp.name}: {raw.shape} vs {gt.shape}")
+            raw = resize_map(raw, gt.shape)
         prob = standardize(raw, mu, delta)
         per_img.append(binary_metrics((prob >= args.threshold).astype(np.uint8), gt))
         ys.append(gt.ravel())
