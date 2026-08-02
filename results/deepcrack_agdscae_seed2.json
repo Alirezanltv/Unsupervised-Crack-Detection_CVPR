@@ -1,9 +1,33 @@
 {
   "dataset": "DeepCrack official test split (237), committed splits seed 2027",
   "config": "agdscae_ref.py, 50 ep/stage, --source-subset 20000, Kaggle T4x2 GPU0, seed 2, 2026-08-02/03 session",
-  "provenance_note": "eval+sweep JSONs captured from the live session log; session was interrupted before checkpoint download, so the s2 checkpoint/maps may not have been retained (weaker artifact trail than s0/s1 - rerun if a reviewer-grade artifact is ever needed for this seed)",
-  "result": {"pixel_auroc": 0.9099, "pixel_ap": 0.3683, "miou_at_fixed_0.5": 0.4420, "f1_at_fixed_0.5": 0.2724, "recall": 0.9198, "precision": 0.1789, "mu": 0.0681, "delta": 0.0819},
-  "sweep": {"ods_f1": {"t": 0.85, "f1": 0.4528, "miou": 0.6149, "precision": 0.3691, "recall": 0.5856},
-            "best_miou": {"t": 0.87, "miou": 0.6158, "f1": 0.4508},
-            "fixed_0.5": {"f1": 0.2251, "miou": 0.4209}}
+  "provenance_note": "eval+sweep captured live from session log; full checkpoints (stages 1-3) later recovered via checkpoints.zip and stored in agdscae_results_20260802_0925/agdscae/deepcrack_s2/ - artifact trail complete",
+  "result": {
+    "pixel_auroc": 0.9099,
+    "pixel_ap": 0.3683,
+    "miou_at_fixed_0.5": 0.442,
+    "f1_at_fixed_0.5": 0.2724,
+    "recall": 0.9198,
+    "precision": 0.1789,
+    "mu": 0.0681,
+    "delta": 0.0819
+  },
+  "sweep": {
+    "ods_f1": {
+      "t": 0.85,
+      "f1": 0.4528,
+      "miou": 0.6149,
+      "precision": 0.3691,
+      "recall": 0.5856
+    },
+    "best_miou": {
+      "t": 0.87,
+      "miou": 0.6158,
+      "f1": 0.4508
+    },
+    "fixed_0.5": {
+      "f1": 0.2251,
+      "miou": 0.4209
+    }
+  }
 }
