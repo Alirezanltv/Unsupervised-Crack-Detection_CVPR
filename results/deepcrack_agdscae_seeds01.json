@@ -1,0 +1,9 @@
+{
+  "dataset": "DeepCrack official test split (237 images), committed splits seed 2027 (250/50/237)",
+  "config": "agdscae_ref.py, 50 epochs/stage, --source-subset 20000 (documented deviation), Kaggle T4x2, one seed per GPU, 2026-08-02",
+  "artifacts": "checkpoints for all 3 stages x 2 seeds retained locally (agdscae_results_20260802_0925/)",
+  "seed0": {"pixel_auroc": 0.9307, "pixel_ap": 0.4883, "miou_at_fixed_0.5": 0.4498, "f1": 0.2885, "precision": 0.1869, "recall": 0.9665, "mu": 0.0696, "delta": 0.0793},
+  "seed1": {"pixel_auroc": 0.8925, "pixel_ap": 0.2640, "miou_at_fixed_0.5": 0.3479, "f1": 0.2041, "precision": 0.1263, "recall": 0.9458, "mu": 0.0525, "delta": 0.0562},
+  "baselines_same_protocol": {"padim_s0": {"auroc": 0.9181, "ap": 0.3012}, "patchcore_s0": {"auroc": 0.8310, "ap": 0.1929}},
+  "reading": "AG-DSCAE mean AUROC 0.912 (0.931/0.893) is at parity with PaDiM (0.918) and clearly above PatchCore (0.831); mean AP 0.376 (0.488/0.264) exceeds PaDiM's 0.301, with high seed variance - more seeds required before claims. Fixed-0.5 protocol conclusively over-fires on our maps too (precision 0.13-0.19): the rebuilt paper must lead with threshold-free AUROC/AP and report any IoU/F1 at an explicitly stated operating point (e.g. ODS)."
+}
