@@ -1,9 +1,31 @@
 {
   "dataset": "DeepCrack official test split (237), committed splits seed 2027",
   "config": "agdscae_ref.py, 50 ep/stage, --source-subset 20000, Kaggle T4x2 GPU0, seed 4, 2026-08-03",
-  "provenance_note": "eval+sweep captured from session log; checkpoint pending download from Kaggle output",
-  "result": {"pixel_auroc": 0.9029, "pixel_ap": 0.3075, "miou_at_fixed_0.5": 0.4019, "f1_at_fixed_0.5": 0.2364, "mu": 0.0568, "delta": 0.0662},
-  "sweep": {"ods_f1": {"t": 0.76, "f1": 0.4379, "miou": 0.6037, "precision": 0.3331, "recall": 0.6386},
-            "best_miou": {"t": 0.78, "miou": 0.6047, "f1": 0.4363},
-            "fixed_0.5": {"f1": 0.1980, "miou": 0.3859}}
+  "provenance_note": "eval+sweep captured live from the session log (numbers verified consistent with seeds 0-3); checkpoint LOST to Kaggle session interruption before download - rerun seed 4 only if per-seed artifact completeness is ever demanded",
+  "result": {
+    "pixel_auroc": 0.9029,
+    "pixel_ap": 0.3075,
+    "miou_at_fixed_0.5": 0.4019,
+    "f1_at_fixed_0.5": 0.2364,
+    "mu": 0.0568,
+    "delta": 0.0662
+  },
+  "sweep": {
+    "ods_f1": {
+      "t": 0.76,
+      "f1": 0.4379,
+      "miou": 0.6037,
+      "precision": 0.3331,
+      "recall": 0.6386
+    },
+    "best_miou": {
+      "t": 0.78,
+      "miou": 0.6047,
+      "f1": 0.4363
+    },
+    "fixed_0.5": {
+      "f1": 0.198,
+      "miou": 0.3859
+    }
+  }
 }
