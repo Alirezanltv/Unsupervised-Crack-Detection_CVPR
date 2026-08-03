@@ -55,7 +55,8 @@ def build_model(name: str):
     return cls()
 
 
-def run_one(model_name: str, data: Path, out: Path, seed: int, image_size: int):
+def run_one(model_name: str, data: Path, out: Path, seed: int, image_size: int,
+            batch: int | None = None, max_epochs: int | None = None):
     import torch
     from anomalib.data import Folder
     from anomalib.engine import Engine
@@ -72,9 +73,11 @@ def run_one(model_name: str, data: Path, out: Path, seed: int, image_size: int):
         image_size=(image_size, image_size),
         num_workers=2,
         val_split_mode="same_as_test",
+        **({"train_batch_size": batch, "eval_batch_size": batch} if batch else {}),
     )
     model = build_model(model_name)
-    engine = Engine(default_root_dir=out / model_name / f"s{seed}")
+    engine = Engine(default_root_dir=out / model_name / f"s{seed}",
+                    **({"max_epochs": max_epochs} if max_epochs else {}))
     engine.fit(model=model, datamodule=datamodule)
 
     maps_dir = out / model_name / f"s{seed}" / "maps"
@@ -113,12 +116,17 @@ def main():
                     "draem", "rd4ad", "efficientad"])
     ap.add_argument("--seeds", nargs="+", type=int, default=[0, 1, 2, 3, 4])
     ap.add_argument("--image-size", type=int, default=256)
+    ap.add_argument("--batch", type=int, default=None,
+                    help="override train/eval batch size (e.g. 8 for DRAEM on a T4)")
+    ap.add_argument("--max-epochs", type=int, default=None,
+                    help="cap trainer epochs for models that train (e.g. 300 for DRAEM)")
     args = ap.parse_args()
 
     for m in args.models:
         for s in args.seeds:
             print(f"=== {m} seed {s} ===")
-            run_one(m, args.data, args.out, s, args.image_size)
+            run_one(m, args.data, args.out, s, args.image_size,
+                    args.batch, args.max_epochs)
 
 
 if __name__ == "__main__":
