@@ -31,12 +31,13 @@ Then for each run directory:
         --masks data/concrete/test/masks --calib runs/concrete/patchcore/s0/calib
 """
 import argparse
+import json
 from pathlib import Path
 
 import numpy as np
 
 
-def build_model(name: str):
+def build_model(name: str, kwargs: dict | None = None):
     import anomalib.models as M
     registry = {
         "patchcore": "Patchcore",
@@ -52,11 +53,12 @@ def build_model(name: str):
             f"{name}: class {registry[name]} not in your anomalib version; "
             "use the official repo for this model and dump maps in the same "
             "layout, then score with common/eval_maps.py")
-    return cls()
+    return cls(**(kwargs or {}))
 
 
 def run_one(model_name: str, data: Path, out: Path, seed: int, image_size: int,
-            batch: int | None = None, max_epochs: int | None = None):
+            batch: int | None = None, max_epochs: int | None = None,
+            model_kwargs: dict | None = None):
     import torch
     from anomalib.data import Folder
     from anomalib.engine import Engine
@@ -75,7 +77,7 @@ def run_one(model_name: str, data: Path, out: Path, seed: int, image_size: int,
         val_split_mode="same_as_test",
         **({"train_batch_size": batch, "eval_batch_size": batch} if batch else {}),
     )
-    model = build_model(model_name)
+    model = build_model(model_name, model_kwargs)
     engine = Engine(default_root_dir=out / model_name / f"s{seed}",
                     **({"max_epochs": max_epochs} if max_epochs else {}))
     engine.fit(model=model, datamodule=datamodule)
@@ -120,13 +122,17 @@ def main():
                     help="override train/eval batch size (e.g. 8 for DRAEM on a T4)")
     ap.add_argument("--max-epochs", type=int, default=None,
                     help="cap trainer epochs for models that train (e.g. 300 for DRAEM)")
+    ap.add_argument("--model-kwargs", type=str, default=None,
+                    help='JSON passed to the model constructor, e.g. '
+                         '\'{"anomaly_source_path": "/path/to/dtd/images"}\' for DRAEM')
     args = ap.parse_args()
 
     for m in args.models:
         for s in args.seeds:
             print(f"=== {m} seed {s} ===")
             run_one(m, args.data, args.out, s, args.image_size,
-                    args.batch, args.max_epochs)
+                    args.batch, args.max_epochs,
+                    json.loads(args.model_kwargs) if args.model_kwargs else None)
 
 
 if __name__ == "__main__":
