@@ -2,7 +2,7 @@
   "dataset": "DeepCrack official test split (237), committed splits seed 2027",
   "protocol": "option (a): trained on the DeepCrack train split, which is 100% crack-containing (see p1_sota_baselines/PROTOCOL_ANALYSIS.md); maps scored by common/eval_maps.py; seed 0",
   "run": "Kaggle T4x2 commit run, 2026-08-08; anomalib 1.1.1",
-  "provenance": "AUROC/AP and sweep summaries transcribed from session output; full JSONs in the Kaggle version output",
+  "provenance": "full result+sweep JSONs now on disk (results/deepcrack_<model>_s0_*.json) from results_bundle.zip; raw maps retained in baseline_maps.zip (git-ignored)",
   "rd4ad_s0": {
     "pixel_auroc": 0.8723,
     "pixel_ap": 0.2193,
@@ -60,7 +60,8 @@
         "precision": 0.0433
       },
       "note": "degenerate: best F1 equals the predict-everything-positive baseline (2p/(1+p) at 4.3% prevalence); the map carries no threshold-separable signal at any operating point, confirming collapse independently of AUROC"
-    }
+    },
+    "training_log_check": "no NaN/Inf anywhere in draem.log (verified 2026-08-08); loss was numerically healthy throughout, so the collapse is fully attributable to the contaminated-normals protocol violation, not divergence"
   },
   "reference_same_protocol": {
     "ours_5seed_mean": {

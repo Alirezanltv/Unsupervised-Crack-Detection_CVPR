@@ -1,0 +1,105 @@
+/kaggle/working/pyshim/sitecustomize.py:11: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np, _n):
+/kaggle/working/pyshim/sitecustomize.py:11: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np, _n):
+=== draem seed 0 ===
+OpenVINO is not installed. Please install OpenVINO to use OpenVINOInferencer.
+Trainer already configured with model summary callbacks: [<class 'lightning.pytorch.callbacks.rich_model_summary.RichModelSummary'>]. Skipping setting a default `ModelSummary` callback.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+No implementation of `configure_transforms` was provided in the Lightning model. Using default transforms from the base class. This may not be suitable for your use case. Please override `configure_transforms` in your model.
+F1Score class exists for backwards compatibility. It will be removed in v1.1. Please use BinaryF1Score from torchmetrics instead
+F1Score class exists for backwards compatibility. It will be removed in v1.1. Please use BinaryF1Score from torchmetrics instead
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+┏━━━┳━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━┳━━━━━━━┓
+┃   ┃ Name                  ┃ Type                    ┃ Params ┃ Mode  ┃ FLOPs ┃
+┡━━━╇━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━╇━━━━━━━┩
+│ 0 │ model                 │ DraemModel              │ 97.4 M │ train │     0 │
+│ 1 │ loss                  │ DraemLoss               │      0 │ train │     0 │
+│ 2 │ _transform            │ Compose                 │      0 │ train │     0 │
+│ 3 │ normalization_metrics │ MetricCollection        │      0 │ train │     0 │
+│ 4 │ image_threshold       │ F1AdaptiveThreshold     │      0 │ train │     0 │
+│ 5 │ pixel_threshold       │ F1AdaptiveThreshold     │      0 │ train │     0 │
+│ 6 │ image_metrics         │ AnomalibMetricCollecti… │      0 │ train │     0 │
+│ 7 │ pixel_metrics         │ AnomalibMetricCollecti… │      0 │ train │     0 │
+└───┴───────────────────────┴─────────────────────────┴────────┴───────┴───────┘
+Trainable params: 97.4 M                                                        
+Non-trainable params: 0                                                         
+Total params: 97.4 M                                                            
+Total estimated model params size (MB): 389.691                                 
+Modules in train mode: 231                                                      
+Modules in eval mode: 0                                                         
+Total FLOPs: 0                                                                  
+/usr/local/lib/python3.12/dist-packages/lightning/pytorch/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+/usr/local/lib/python3.12/dist-packages/lightning/pytorch/core/module.py:522: You called `self.log('train_loss', ..., logger=True)` but have no logger configured. You can enable one by doing `Trainer(logger=ALogger(...))`
+`Trainer.fit` stopped: `max_epochs=300` reached.
+Epoch 299/299 ━━━━━━━━━━━━━━━━ 25/25 0:00:49 •        0.48it/s train_loss_step: 
+                                     0:00:00                   0.407            
+                                                               pixel_AUROC:     
+                                                               0.391            
+                                                               pixel_F1Score:   
+                                                               0.069            
+                                                               train_loss_epoch:
+                                                               0.389            
+ckpt_path is not provided. Model weights will not be loaded.
+F1Score class exists for backwards compatibility. It will be removed in v1.1. Please use BinaryF1Score from torchmetrics instead
+F1Score class exists for backwards compatibility. It will be removed in v1.1. Please use BinaryF1Score from torchmetrics instead
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+Predicting ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 36/36 0:01:08 • 0:00:00 0.52it/s 
+ckpt_path is not provided. Model weights will not be loaded.
+F1Score class exists for backwards compatibility. It will be removed in v1.1. Please use BinaryF1Score from torchmetrics instead
+F1Score class exists for backwards compatibility. It will be removed in v1.1. Please use BinaryF1Score from torchmetrics instead
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+Predicting ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7/7 0:00:10 • 0:00:00 0.58it/s 
+/kaggle/working/pyshim/sitecustomize.py:11: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np, _n):
+/kaggle/working/pyshim/sitecustomize.py:11: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np, _n):
+/kaggle/working/Unsupervised-Crack-Detection_CVPR/common/eval_maps.py:57: RuntimeWarning: overflow encountered in exp
+  return 1.0 / (1.0 + np.exp(-z))          # sigmoid, as in Eq. (13)
+{
+  "miou": 0.021626439179131755,
+  "iou_crack": 0.043247747507188385,
+  "f1": 0.08081957329763836,
+  "precision": 0.04324944394077831,
+  "recall": 0.9995053623683441,
+  "n_images": 237,
+  "mu": 0.9999995014998785,
+  "delta": 0.00031021556807025324,
+  "threshold": 0.5,
+  "pixel_auroc": 0.499590397337648,
+  "pixel_ap": 0.04323684004527772
+}
+/kaggle/working/pyshim/sitecustomize.py:11: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np, _n):
+/kaggle/working/pyshim/sitecustomize.py:11: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np, _n):
+/kaggle/working/Unsupervised-Crack-Detection_CVPR/common/eval_maps.py:57: RuntimeWarning: overflow encountered in exp
+  return 1.0 / (1.0 + np.exp(-z))          # sigmoid, as in Eq. (13)
+{
+  "mu": 0.9999995014998785,
+  "delta": 0.00031021556807025324,
+  "n_thresholds": 99,
+  "ods_f1": {
+    "t": 0.01,
+    "f1": 0.08291363466705626,
+    "miou": 0.021627146388974252,
+    "precision": 0.043250730021626195,
+    "recall": 0.9995121980821216
+  },
+  "best_miou": {
+    "t": 0.51,
+    "f1": 0.0,
+    "miou": 0.47836463027490794,
+    "precision": 0.0,
+    "recall": 0.0
+  },
+  "fixed_0.5": {
+    "t": 0.5,
+    "f1": 0.08290994038768018,
+    "miou": 0.02162650009813668,
+    "precision": 0.04324880784439198,
+    "recall": 0.9994650516766616
+  }
+}
