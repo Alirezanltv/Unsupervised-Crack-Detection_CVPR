@@ -1,0 +1,154 @@
+{
+  "dataset": "DeepCrack official test split (237 images), committed splits seed 2027",
+  "protocol": "all methods trained on the identical crack-containing train split; maps scored at GT resolution by common/eval_maps.py; AUROC/AP threshold-free; ODS-F1 and best-MIoU at dataset-level thresholds swept on the standardized maps",
+  "models": {
+    "agdscae": {
+      "auroc": {
+        "mean": 0.905,
+        "std": 0.0166,
+        "n_seeds": 5
+      },
+      "ap": {
+        "mean": 0.3432,
+        "std": 0.0899,
+        "n_seeds": 5
+      },
+      "ods_f1": {
+        "mean": 0.4469,
+        "std": 0.0346,
+        "n_seeds": 5
+      },
+      "ods_miou": {
+        "mean": 0.6118,
+        "std": 0.02,
+        "n_seeds": 5
+      }
+    },
+    "padim": {
+      "auroc": {
+        "mean": 0.9178,
+        "std": 0.0027,
+        "n_seeds": 5
+      },
+      "ap": {
+        "mean": 0.2794,
+        "std": 0.0114,
+        "n_seeds": 5
+      },
+      "ods_f1": {
+        "mean": 0.376,
+        "std": 0.0056,
+        "n_seeds": 5
+      },
+      "ods_miou": {
+        "mean": 0.5773,
+        "std": 0.0035,
+        "n_seeds": 5
+      }
+    },
+    "patchcore": {
+      "auroc": {
+        "mean": 0.8286,
+        "std": 0.0038,
+        "n_seeds": 5
+      },
+      "ap": {
+        "mean": 0.1901,
+        "std": 0.0043,
+        "n_seeds": 5
+      },
+      "ods_f1": {
+        "mean": 0.2949,
+        "std": 0.0048,
+        "n_seeds": 5
+      },
+      "ods_miou": {
+        "mean": 0.5456,
+        "std": 0.0024,
+        "n_seeds": 5
+      }
+    },
+    "rd4ad_s0": {
+      "auroc": 0.8723,
+      "ap": 0.2193,
+      "ods_f1": 0.3197,
+      "ods_miou": 0.5552,
+      "n_seeds": 1
+    },
+    "efficientad_s0": {
+      "auroc": 0.7563,
+      "ap": 0.1358,
+      "ods_f1": 0.2575,
+      "ods_miou": 0.5199,
+      "n_seeds": 1
+    },
+    "draem_s0": {
+      "auroc": 0.4996,
+      "ap": 0.0432,
+      "n_seeds": 1,
+      "status": "collapse under contaminated normals; report only with explanation"
+    }
+  },
+  "welch_holm": {
+    "agdscae_vs_padim": {
+      "auroc": {
+        "t": -1.701,
+        "p": 0.1606,
+        "direction": "ours_lower",
+        "p_holm": 0.3212,
+        "significant_at_0.05": false
+      },
+      "ap": {
+        "t": 1.575,
+        "p": 0.1882,
+        "direction": "ours_higher",
+        "p_holm": 0.3212,
+        "significant_at_0.05": false
+      },
+      "ods_f1": {
+        "t": 4.518,
+        "p": 0.0095,
+        "direction": "ours_higher",
+        "p_holm": 0.038,
+        "significant_at_0.05": true
+      },
+      "ods_miou": {
+        "t": 3.795,
+        "p": 0.0172,
+        "direction": "ours_higher",
+        "p_holm": 0.0516,
+        "significant_at_0.05": false
+      }
+    },
+    "agdscae_vs_patchcore": {
+      "auroc": {
+        "t": 10.017,
+        "p": 0.0003,
+        "direction": "ours_higher",
+        "p_holm": 0.0012,
+        "significant_at_0.05": true
+      },
+      "ap": {
+        "t": 3.806,
+        "p": 0.0188,
+        "direction": "ours_higher",
+        "p_holm": 0.0188,
+        "significant_at_0.05": true
+      },
+      "ods_f1": {
+        "t": 9.719,
+        "p": 0.0005,
+        "direction": "ours_higher",
+        "p_holm": 0.0015,
+        "significant_at_0.05": true
+      },
+      "ods_miou": {
+        "t": 7.341,
+        "p": 0.0016,
+        "direction": "ours_higher",
+        "p_holm": 0.0032,
+        "significant_at_0.05": true
+      }
+    }
+  }
+}
