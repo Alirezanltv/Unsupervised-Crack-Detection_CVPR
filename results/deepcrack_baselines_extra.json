@@ -2,13 +2,78 @@
   "dataset": "DeepCrack official test split (237), committed splits seed 2027",
   "protocol": "option (a): trained on the DeepCrack train split, which is 100% crack-containing (see p1_sota_baselines/PROTOCOL_ANALYSIS.md); maps scored by common/eval_maps.py; seed 0",
   "run": "Kaggle T4x2 commit run, 2026-08-08; anomalib 1.1.1",
-  "provenance": "AUROC/AP transcribed from the session manifest output; full result+sweep JSONs pending download from the Kaggle version output",
-  "rd4ad_s0": {"pixel_auroc": 0.8723, "pixel_ap": 0.2193, "epochs": 200, "batch": 16},
-  "efficientad_s0": {"pixel_auroc": 0.7563, "pixel_ap": 0.1358, "epochs": 100, "batch": 1},
-  "draem_s0": {"pixel_auroc": 0.4996, "pixel_ap": 0.0432, "epochs": 300, "batch": 8,
-               "status": "CHANCE-LEVEL - DO NOT REPORT AS DRAEM'S PERFORMANCE",
-               "explanation": "DRAEM trains a discriminative head from scratch under the assumption that training images are anomaly-free; DeepCrack's train split is 100% cracked, which inverts its objective. Rerun with DTD anomaly source before any reporting decision; see PROTOCOL_ANALYSIS.md"},
-  "reference_same_protocol": {"ours_5seed_mean": {"pixel_auroc": 0.905, "pixel_ap": 0.343},
-                              "padim_s0": {"pixel_auroc": 0.9181, "pixel_ap": 0.3012},
-                              "patchcore_s0": {"pixel_auroc": 0.8310, "pixel_ap": 0.1929}}
+  "provenance": "AUROC/AP and sweep summaries transcribed from session output; full JSONs in the Kaggle version output",
+  "rd4ad_s0": {
+    "pixel_auroc": 0.8723,
+    "pixel_ap": 0.2193,
+    "epochs": 200,
+    "batch": 16,
+    "sweep": {
+      "ods_f1": {
+        "t": 0.91,
+        "f1": 0.3197,
+        "miou": 0.5514
+      },
+      "best_miou": {
+        "t": 0.93,
+        "miou": 0.5552
+      },
+      "fixed_0.5": {
+        "f1": 0.1311,
+        "miou": 0.2417
+      }
+    }
+  },
+  "efficientad_s0": {
+    "pixel_auroc": 0.7563,
+    "pixel_ap": 0.1358,
+    "epochs": 100,
+    "batch": 1,
+    "sweep": {
+      "ods_f1": {
+        "t": 0.62,
+        "f1": 0.2575,
+        "miou": 0.5057
+      },
+      "best_miou": {
+        "t": 0.68,
+        "miou": 0.5199
+      },
+      "fixed_0.5": {
+        "f1": 0.1317,
+        "miou": 0.2921
+      }
+    }
+  },
+  "draem_s0": {
+    "pixel_auroc": 0.4996,
+    "pixel_ap": 0.0432,
+    "epochs": 300,
+    "batch": 8,
+    "status": "CHANCE-LEVEL - DO NOT REPORT AS DRAEM'S PERFORMANCE",
+    "explanation": "DRAEM trains a discriminative head from scratch under the assumption that training images are anomaly-free; DeepCrack's train split is 100% cracked, which inverts its objective. Rerun with DTD anomaly source before any reporting decision; see PROTOCOL_ANALYSIS.md",
+    "sweep": {
+      "ods_f1": {
+        "t": 0.01,
+        "f1": 0.0829,
+        "recall": 0.9995,
+        "precision": 0.0433
+      },
+      "note": "degenerate: best F1 equals the predict-everything-positive baseline (2p/(1+p) at 4.3% prevalence); the map carries no threshold-separable signal at any operating point, confirming collapse independently of AUROC"
+    }
+  },
+  "reference_same_protocol": {
+    "ours_5seed_mean": {
+      "pixel_auroc": 0.905,
+      "pixel_ap": 0.343
+    },
+    "padim_s0": {
+      "pixel_auroc": 0.9181,
+      "pixel_ap": 0.3012
+    },
+    "patchcore_s0": {
+      "pixel_auroc": 0.831,
+      "pixel_ap": 0.1929
+    }
+  }
 }
