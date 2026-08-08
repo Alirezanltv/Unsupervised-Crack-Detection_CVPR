@@ -424,6 +424,112 @@ def train(args):
     print("training complete:", out / "ckpt_stage3.pt")
 
 
+# ------------------------------------------------------------- variants ----
+def train_variant(args):
+    """Ablation variants. The 'full' pipeline lives in train() and is not
+    touched; each variant matches the same total 3xE epoch budget."""
+    dev = "cuda" if torch.cuda.is_available() else "cpu"
+    torch.manual_seed(args.seed)
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+    out = Path(args.out)
+    E = args.stage_epochs
+
+    tgt = DataLoader(CrackSet(Path(args.raw_root),
+                              Path(args.splits) / f"{args.name}_train.txt", True),
+                     batch_size=16, shuffle=True, num_workers=2, drop_last=True)
+    model = AGDSCAE(with_attention=False).to(dev)
+
+    def stage_state(k):
+        f = out / f"ckpt_stage{k}.pt"
+        if not f.exists():
+            return 0, None
+        ck = torch.load(f, map_location=dev)
+        return ck["epoch"] + 1, ck["state"]
+
+    def run_phase(k, n_epochs, lr, use_ssim, use_ot, src_loader=None):
+        ep0, st = stage_state(k)
+        if st is not None:
+            model.load_state_dict(st, strict=False)
+        if ep0 >= n_epochs:
+            print(f"phase {k} complete ({ep0} epochs), skipping", flush=True)
+            return
+        opt = torch.optim.AdamW(list(model.enc_t.parameters()) +
+                                list(model.dec.parameters()),
+                                lr=lr, weight_decay=1e-4)
+        src_it = iter(src_loader) if use_ot else None
+        for ep in range(ep0, n_epochs):
+            for bi, x in enumerate(tgt):
+                x = x.to(dev)
+                xh, _ = model(x)
+                if use_ssim:
+                    loss = (1 - ssim(x, xh)) + 0.3 * edge_l1(x, xh)
+                else:
+                    loss = F.mse_loss(xh, x) + 0.3 * edge_l1(x, xh)
+                if use_ot and bi % 5 == 0:
+                    try:
+                        xs = next(src_it)
+                    except StopIteration:
+                        src_it = iter(src_loader)
+                        xs = next(src_it)
+                    _, zs = model.enc_s(xs.to(dev))
+                    _, zt = model.enc_t(x)
+                    loss = loss + (0.05 if use_ssim else 0.1) * sinkhorn_ot(zs, zt)
+                opt.zero_grad(); loss.backward()
+                nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+                opt.step()
+            print(f"[{args.variant} phase{k} ep{ep + 1}/{n_epochs}] "
+                  f"loss={loss.item():.4f}", flush=True)
+            save_ckpt(out / f"ckpt_stage{k}.pt", model, k, ep)
+
+    if args.variant == "scratch":
+        # no source, no OT: 2E epochs MSE+edge, then E epochs SSIM+edge
+        run_phase(2, 2 * E, 1e-4, use_ssim=False, use_ot=False)
+        run_phase(3, E, 5e-5, use_ssim=True, use_ot=False)
+        print("training complete:", out / "ckpt_stage3.pt")
+        return
+
+    # pretrain and ot variants share the paper's stage 1
+    src = DataLoader(MnistSource(load_mnist(out / "mnist", args.source_subset,
+                                            args.seed)),
+                     batch_size=32, shuffle=True, num_workers=2, drop_last=True)
+    ep0, st = stage_state(1)
+    if st is not None:
+        model.load_state_dict(st, strict=False)
+    if ep0 < E:
+        opt = torch.optim.AdamW(list(model.enc_t.parameters()) +
+                                list(model.dec.parameters()),
+                                lr=1e-3, weight_decay=1e-4)
+        sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=E,
+                                                           last_epoch=ep0 - 1)
+        for ep in range(ep0, E):
+            for x in src:
+                x = x.to(dev)
+                xh, _ = model(x)
+                loss = F.mse_loss(xh, x) + 0.5 * edge_l1(x, xh)
+                opt.zero_grad(); loss.backward()
+                nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+                opt.step()
+            sched.step()
+            print(f"[{args.variant} stage1 ep{ep + 1}/{E}] "
+                  f"loss={loss.item():.4f}", flush=True)
+            save_ckpt(out / "ckpt_stage1.pt", model, 1, ep)
+    else:
+        print(f"stage 1 complete ({ep0} epochs), skipping", flush=True)
+
+    model.enc_s.load_state_dict(model.enc_t.state_dict())
+    for prm in model.enc_s.parameters():
+        prm.requires_grad_(False)
+
+    if args.variant == "pretrain":
+        run_phase(2, E, 1e-4, use_ssim=False, use_ot=False)
+        run_phase(3, E, 5e-5, use_ssim=True, use_ot=False)
+    else:  # ot
+        run_phase(2, E, 1e-4, use_ssim=False, use_ot=True, src_loader=src)
+        run_phase(3, E, 5e-5, use_ssim=True, use_ot=True, src_loader=src)
+    print("training complete:", out / "ckpt_stage3.pt")
+
+
 # ----------------------------------------------------------------- dump ----
 def dump(args):
     from PIL import Image
@@ -462,12 +568,26 @@ def main():
     t.add_argument("--stage-epochs", type=int, default=50)
     t.add_argument("--source-subset", type=int, default=70000,
                    help="reduce for smoke runs / slow GPUs; paper uses 70000")
+    t.add_argument("--variant", default="full",
+                   choices=["full", "scratch", "pretrain", "ot"],
+                   help="ablation variant; every variant gets the same total "
+                        "3xE epoch budget. full: the paper pipeline "
+                        "(unchanged code path). scratch: no transfer, target "
+                        "reconstruction only (2E epochs MSE+edge, E epochs "
+                        "SSIM+edge). pretrain: stage-1 MNIST pretraining then "
+                        "target reconstruction, no OT, no gates. ot: stages "
+                        "1-2 as the paper plus a gate-free SSIM+OT stage 3.")
     d = sub.add_parser("dump")
     d.add_argument("--ckpt", required=True)
     d.add_argument("--images", required=True)
     d.add_argument("--out", required=True)
     args = ap.parse_args()
-    (train if args.cmd == "train" else dump)(args)
+    if args.cmd == "dump":
+        dump(args)
+    elif getattr(args, "variant", "full") == "full":
+        train(args)
+    else:
+        train_variant(args)
 
 
 if __name__ == "__main__":

@@ -10,3 +10,4 @@ gates_out/
 *.ckpt
 *.npy
 .ipynb_checkpoints/
+baseline_maps.zip
