@@ -1,0 +1,212 @@
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+[pretrain stage1 ep1/50] loss=0.0062
+[pretrain stage1 ep2/50] loss=0.0055
+[pretrain stage1 ep3/50] loss=0.0044
+[pretrain stage1 ep4/50] loss=0.0038
+[pretrain stage1 ep5/50] loss=0.0042
+[pretrain stage1 ep6/50] loss=0.0039
+[pretrain stage1 ep7/50] loss=0.0037
+[pretrain stage1 ep8/50] loss=0.0035
+[pretrain stage1 ep9/50] loss=0.0035
+[pretrain stage1 ep10/50] loss=0.0039
+[pretrain stage1 ep11/50] loss=0.0036
+[pretrain stage1 ep12/50] loss=0.0043
+[pretrain stage1 ep13/50] loss=0.0037
+[pretrain stage1 ep14/50] loss=0.0029
+[pretrain stage1 ep15/50] loss=0.0040
+[pretrain stage1 ep16/50] loss=0.0033
+[pretrain stage1 ep17/50] loss=0.0035
+[pretrain stage1 ep18/50] loss=0.0036
+[pretrain stage1 ep19/50] loss=0.0031
+[pretrain stage1 ep20/50] loss=0.0031
+[pretrain stage1 ep21/50] loss=0.0032
+[pretrain stage1 ep22/50] loss=0.0031
+[pretrain stage1 ep23/50] loss=0.0034
+[pretrain stage1 ep24/50] loss=0.0034
+[pretrain stage1 ep25/50] loss=0.0027
+[pretrain stage1 ep26/50] loss=0.0033
+[pretrain stage1 ep27/50] loss=0.0036
+[pretrain stage1 ep28/50] loss=0.0030
+[pretrain stage1 ep29/50] loss=0.0034
+[pretrain stage1 ep30/50] loss=0.0032
+[pretrain stage1 ep31/50] loss=0.0034
+[pretrain stage1 ep32/50] loss=0.0027
+[pretrain stage1 ep33/50] loss=0.0035
+[pretrain stage1 ep34/50] loss=0.0030
+[pretrain stage1 ep35/50] loss=0.0034
+[pretrain stage1 ep36/50] loss=0.0031
+[pretrain stage1 ep37/50] loss=0.0034
+[pretrain stage1 ep38/50] loss=0.0034
+[pretrain stage1 ep39/50] loss=0.0034
+[pretrain stage1 ep40/50] loss=0.0035
+[pretrain stage1 ep41/50] loss=0.0029
+[pretrain stage1 ep42/50] loss=0.0035
+[pretrain stage1 ep43/50] loss=0.0031
+[pretrain stage1 ep44/50] loss=0.0027
+[pretrain stage1 ep45/50] loss=0.0030
+[pretrain stage1 ep46/50] loss=0.0033
+[pretrain stage1 ep47/50] loss=0.0033
+[pretrain stage1 ep48/50] loss=0.0028
+[pretrain stage1 ep49/50] loss=0.0029
+[pretrain stage1 ep50/50] loss=0.0033
+[pretrain phase2 ep1/50] loss=0.1616
+[pretrain phase2 ep2/50] loss=0.1485
+[pretrain phase2 ep3/50] loss=0.1737
+[pretrain phase2 ep4/50] loss=0.1664
+[pretrain phase2 ep5/50] loss=0.1095
+[pretrain phase2 ep6/50] loss=0.1437
+[pretrain phase2 ep7/50] loss=0.1266
+[pretrain phase2 ep8/50] loss=0.1227
+[pretrain phase2 ep9/50] loss=0.1067
+[pretrain phase2 ep10/50] loss=0.1115
+[pretrain phase2 ep11/50] loss=0.1070
+[pretrain phase2 ep12/50] loss=0.1028
+[pretrain phase2 ep13/50] loss=0.0935
+[pretrain phase2 ep14/50] loss=0.0943
+[pretrain phase2 ep15/50] loss=0.0908
+[pretrain phase2 ep16/50] loss=0.1093
+[pretrain phase2 ep17/50] loss=0.0853
+[pretrain phase2 ep18/50] loss=0.0801
+[pretrain phase2 ep19/50] loss=0.0994
+[pretrain phase2 ep20/50] loss=0.0914
+[pretrain phase2 ep21/50] loss=0.0865
+[pretrain phase2 ep22/50] loss=0.1040
+[pretrain phase2 ep23/50] loss=0.0871
+[pretrain phase2 ep24/50] loss=0.0816
+[pretrain phase2 ep25/50] loss=0.0944
+[pretrain phase2 ep26/50] loss=0.0649
+[pretrain phase2 ep27/50] loss=0.0815
+[pretrain phase2 ep28/50] loss=0.0683
+[pretrain phase2 ep29/50] loss=0.0731
+[pretrain phase2 ep30/50] loss=0.0848
+[pretrain phase2 ep31/50] loss=0.0629
+[pretrain phase2 ep32/50] loss=0.0702
+[pretrain phase2 ep33/50] loss=0.0546
+[pretrain phase2 ep34/50] loss=0.0738
+[pretrain phase2 ep35/50] loss=0.0527
+[pretrain phase2 ep36/50] loss=0.0616
+[pretrain phase2 ep37/50] loss=0.0734
+[pretrain phase2 ep38/50] loss=0.0708
+[pretrain phase2 ep39/50] loss=0.0590
+[pretrain phase2 ep40/50] loss=0.0703
+[pretrain phase2 ep41/50] loss=0.0782
+[pretrain phase2 ep42/50] loss=0.0884
+[pretrain phase2 ep43/50] loss=0.0529
+[pretrain phase2 ep44/50] loss=0.0531
+[pretrain phase2 ep45/50] loss=0.0474
+[pretrain phase2 ep46/50] loss=0.0802
+[pretrain phase2 ep47/50] loss=0.0691
+[pretrain phase2 ep48/50] loss=0.0508
+[pretrain phase2 ep49/50] loss=0.0446
+[pretrain phase2 ep50/50] loss=0.0544
+[pretrain phase3 ep1/50] loss=0.3691
+[pretrain phase3 ep2/50] loss=0.3908
+[pretrain phase3 ep3/50] loss=0.3597
+[pretrain phase3 ep4/50] loss=0.3094
+[pretrain phase3 ep5/50] loss=0.3367
+[pretrain phase3 ep6/50] loss=0.3310
+[pretrain phase3 ep7/50] loss=0.3626
+[pretrain phase3 ep8/50] loss=0.3441
+[pretrain phase3 ep9/50] loss=0.3627
+[pretrain phase3 ep10/50] loss=0.2845
+[pretrain phase3 ep11/50] loss=0.2927
+[pretrain phase3 ep12/50] loss=0.3640
+[pretrain phase3 ep13/50] loss=0.2882
+[pretrain phase3 ep14/50] loss=0.3086
+[pretrain phase3 ep15/50] loss=0.2651
+[pretrain phase3 ep16/50] loss=0.2494
+[pretrain phase3 ep17/50] loss=0.2858
+[pretrain phase3 ep18/50] loss=0.3264
+[pretrain phase3 ep19/50] loss=0.2919
+[pretrain phase3 ep20/50] loss=0.2969
+[pretrain phase3 ep21/50] loss=0.2725
+[pretrain phase3 ep22/50] loss=0.2817
+[pretrain phase3 ep23/50] loss=0.2957
+[pretrain phase3 ep24/50] loss=0.2287
+[pretrain phase3 ep25/50] loss=0.2773
+[pretrain phase3 ep26/50] loss=0.3055
+[pretrain phase3 ep27/50] loss=0.2804
+[pretrain phase3 ep28/50] loss=0.2874
+[pretrain phase3 ep29/50] loss=0.2650
+[pretrain phase3 ep30/50] loss=0.2594
+[pretrain phase3 ep31/50] loss=0.2603
+[pretrain phase3 ep32/50] loss=0.2548
+[pretrain phase3 ep33/50] loss=0.2514
+[pretrain phase3 ep34/50] loss=0.2668
+[pretrain phase3 ep35/50] loss=0.2343
+[pretrain phase3 ep36/50] loss=0.2760
+[pretrain phase3 ep37/50] loss=0.2509
+[pretrain phase3 ep38/50] loss=0.2604
+[pretrain phase3 ep39/50] loss=0.2403
+[pretrain phase3 ep40/50] loss=0.2469
+[pretrain phase3 ep41/50] loss=0.2736
+[pretrain phase3 ep42/50] loss=0.2654
+[pretrain phase3 ep43/50] loss=0.2410
+[pretrain phase3 ep44/50] loss=0.2738
+[pretrain phase3 ep45/50] loss=0.2260
+[pretrain phase3 ep46/50] loss=0.2298
+[pretrain phase3 ep47/50] loss=0.2456
+[pretrain phase3 ep48/50] loss=0.3033
+[pretrain phase3 ep49/50] loss=0.1995
+[pretrain phase3 ep50/50] loss=0.2368
+training complete: /kaggle/working/abl/pretrain_s0/ckpt_stage3.pt
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+wrote 237 maps to /kaggle/working/abl/pretrain_s0/maps
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+wrote 50 maps to /kaggle/working/abl/pretrain_s0/calib
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+{
+  "miou": 0.47768796804617253,
+  "iou_crack": 0.19984935608137272,
+  "f1": 0.31297731350629293,
+  "precision": 0.20785253572448834,
+  "recall": 0.9520483387947614,
+  "n_images": 237,
+  "mu": 0.10614738946724302,
+  "delta": 0.11351333511344365,
+  "threshold": 0.5,
+  "pixel_auroc": 0.925127133267583,
+  "pixel_ap": 0.47856180891947697
+}
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+{
+  "mu": 0.10614738946724302,
+  "delta": 0.11351333511344365,
+  "n_thresholds": 99,
+  "ods_f1": {
+    "t": 0.88,
+    "f1": 0.5004214192457869,
+    "miou": 0.6422768060530434,
+    "precision": 0.4554310830005628,
+    "recall": 0.5552749592370311
+  },
+  "best_miou": {
+    "t": 0.89,
+    "f1": 0.4994143811063534,
+    "miou": 0.6429453486652053,
+    "precision": 0.47331974504400864,
+    "recall": 0.5285541504474474
+  },
+  "fixed_0.5": {
+    "t": 0.5,
+    "f1": 0.2530412824476907,
+    "miou": 0.4502167953264727,
+    "precision": 0.14672729446939292,
+    "recall": 0.9187088606767703
+  }
+}

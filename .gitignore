@@ -11,3 +11,4 @@ gates_out/
 *.npy
 .ipynb_checkpoints/
 baseline_maps.zip
+DRAEM+DTD/

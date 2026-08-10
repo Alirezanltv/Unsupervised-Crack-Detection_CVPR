@@ -1,0 +1,212 @@
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+[scratch phase2 ep1/100] loss=0.0920
+[scratch phase2 ep2/100] loss=0.0832
+[scratch phase2 ep3/100] loss=0.0756
+[scratch phase2 ep4/100] loss=0.0744
+[scratch phase2 ep5/100] loss=0.0532
+[scratch phase2 ep6/100] loss=0.0613
+[scratch phase2 ep7/100] loss=0.0655
+[scratch phase2 ep8/100] loss=0.0411
+[scratch phase2 ep9/100] loss=0.0388
+[scratch phase2 ep10/100] loss=0.0378
+[scratch phase2 ep11/100] loss=0.0315
+[scratch phase2 ep12/100] loss=0.0455
+[scratch phase2 ep13/100] loss=0.0408
+[scratch phase2 ep14/100] loss=0.0468
+[scratch phase2 ep15/100] loss=0.0329
+[scratch phase2 ep16/100] loss=0.0409
+[scratch phase2 ep17/100] loss=0.0329
+[scratch phase2 ep18/100] loss=0.0273
+[scratch phase2 ep19/100] loss=0.0246
+[scratch phase2 ep20/100] loss=0.0356
+[scratch phase2 ep21/100] loss=0.0412
+[scratch phase2 ep22/100] loss=0.0330
+[scratch phase2 ep23/100] loss=0.0309
+[scratch phase2 ep24/100] loss=0.0332
+[scratch phase2 ep25/100] loss=0.0353
+[scratch phase2 ep26/100] loss=0.0306
+[scratch phase2 ep27/100] loss=0.0294
+[scratch phase2 ep28/100] loss=0.0205
+[scratch phase2 ep29/100] loss=0.0241
+[scratch phase2 ep30/100] loss=0.0252
+[scratch phase2 ep31/100] loss=0.0225
+[scratch phase2 ep32/100] loss=0.0332
+[scratch phase2 ep33/100] loss=0.0241
+[scratch phase2 ep34/100] loss=0.0276
+[scratch phase2 ep35/100] loss=0.0347
+[scratch phase2 ep36/100] loss=0.0242
+[scratch phase2 ep37/100] loss=0.0213
+[scratch phase2 ep38/100] loss=0.0229
+[scratch phase2 ep39/100] loss=0.0228
+[scratch phase2 ep40/100] loss=0.0233
+[scratch phase2 ep41/100] loss=0.0216
+[scratch phase2 ep42/100] loss=0.0210
+[scratch phase2 ep43/100] loss=0.0344
+[scratch phase2 ep44/100] loss=0.0175
+[scratch phase2 ep45/100] loss=0.0246
+[scratch phase2 ep46/100] loss=0.0215
+[scratch phase2 ep47/100] loss=0.0261
+[scratch phase2 ep48/100] loss=0.0199
+[scratch phase2 ep49/100] loss=0.0208
+[scratch phase2 ep50/100] loss=0.0193
+[scratch phase2 ep51/100] loss=0.0193
+[scratch phase2 ep52/100] loss=0.0211
+[scratch phase2 ep53/100] loss=0.0232
+[scratch phase2 ep54/100] loss=0.0193
+[scratch phase2 ep55/100] loss=0.0218
+[scratch phase2 ep56/100] loss=0.0199
+[scratch phase2 ep57/100] loss=0.0225
+[scratch phase2 ep58/100] loss=0.0226
+[scratch phase2 ep59/100] loss=0.0210
+[scratch phase2 ep60/100] loss=0.0218
+[scratch phase2 ep61/100] loss=0.0192
+[scratch phase2 ep62/100] loss=0.0203
+[scratch phase2 ep63/100] loss=0.0202
+[scratch phase2 ep64/100] loss=0.0195
+[scratch phase2 ep65/100] loss=0.0172
+[scratch phase2 ep66/100] loss=0.0197
+[scratch phase2 ep67/100] loss=0.0232
+[scratch phase2 ep68/100] loss=0.0170
+[scratch phase2 ep69/100] loss=0.0199
+[scratch phase2 ep70/100] loss=0.0175
+[scratch phase2 ep71/100] loss=0.0188
+[scratch phase2 ep72/100] loss=0.0226
+[scratch phase2 ep73/100] loss=0.0192
+[scratch phase2 ep74/100] loss=0.0187
+[scratch phase2 ep75/100] loss=0.0197
+[scratch phase2 ep76/100] loss=0.0149
+[scratch phase2 ep77/100] loss=0.0230
+[scratch phase2 ep78/100] loss=0.0181
+[scratch phase2 ep79/100] loss=0.0178
+[scratch phase2 ep80/100] loss=0.0190
+[scratch phase2 ep81/100] loss=0.0195
+[scratch phase2 ep82/100] loss=0.0160
+[scratch phase2 ep83/100] loss=0.0193
+[scratch phase2 ep84/100] loss=0.0230
+[scratch phase2 ep85/100] loss=0.0176
+[scratch phase2 ep86/100] loss=0.0214
+[scratch phase2 ep87/100] loss=0.0226
+[scratch phase2 ep88/100] loss=0.0172
+[scratch phase2 ep89/100] loss=0.0256
+[scratch phase2 ep90/100] loss=0.0226
+[scratch phase2 ep91/100] loss=0.0212
+[scratch phase2 ep92/100] loss=0.0234
+[scratch phase2 ep93/100] loss=0.0150
+[scratch phase2 ep94/100] loss=0.0193
+[scratch phase2 ep95/100] loss=0.0157
+[scratch phase2 ep96/100] loss=0.0193
+[scratch phase2 ep97/100] loss=0.0180
+[scratch phase2 ep98/100] loss=0.0149
+[scratch phase2 ep99/100] loss=0.0133
+[scratch phase2 ep100/100] loss=0.0168
+[scratch phase3 ep1/50] loss=0.1506
+[scratch phase3 ep2/50] loss=0.1365
+[scratch phase3 ep3/50] loss=0.0923
+[scratch phase3 ep4/50] loss=0.1357
+[scratch phase3 ep5/50] loss=0.0953
+[scratch phase3 ep6/50] loss=0.1153
+[scratch phase3 ep7/50] loss=0.1399
+[scratch phase3 ep8/50] loss=0.1082
+[scratch phase3 ep9/50] loss=0.0851
+[scratch phase3 ep10/50] loss=0.0874
+[scratch phase3 ep11/50] loss=0.0816
+[scratch phase3 ep12/50] loss=0.1043
+[scratch phase3 ep13/50] loss=0.1083
+[scratch phase3 ep14/50] loss=0.0853
+[scratch phase3 ep15/50] loss=0.1004
+[scratch phase3 ep16/50] loss=0.0984
+[scratch phase3 ep17/50] loss=0.0935
+[scratch phase3 ep18/50] loss=0.0951
+[scratch phase3 ep19/50] loss=0.0865
+[scratch phase3 ep20/50] loss=0.0770
+[scratch phase3 ep21/50] loss=0.0914
+[scratch phase3 ep22/50] loss=0.0907
+[scratch phase3 ep23/50] loss=0.0799
+[scratch phase3 ep24/50] loss=0.0756
+[scratch phase3 ep25/50] loss=0.0897
+[scratch phase3 ep26/50] loss=0.0986
+[scratch phase3 ep27/50] loss=0.0932
+[scratch phase3 ep28/50] loss=0.0738
+[scratch phase3 ep29/50] loss=0.0979
+[scratch phase3 ep30/50] loss=0.0831
+[scratch phase3 ep31/50] loss=0.0873
+[scratch phase3 ep32/50] loss=0.0759
+[scratch phase3 ep33/50] loss=0.1070
+[scratch phase3 ep34/50] loss=0.0749
+[scratch phase3 ep35/50] loss=0.0813
+[scratch phase3 ep36/50] loss=0.1051
+[scratch phase3 ep37/50] loss=0.0994
+[scratch phase3 ep38/50] loss=0.0892
+[scratch phase3 ep39/50] loss=0.0703
+[scratch phase3 ep40/50] loss=0.0912
+[scratch phase3 ep41/50] loss=0.0762
+[scratch phase3 ep42/50] loss=0.0804
+[scratch phase3 ep43/50] loss=0.0970
+[scratch phase3 ep44/50] loss=0.0810
+[scratch phase3 ep45/50] loss=0.0969
+[scratch phase3 ep46/50] loss=0.0811
+[scratch phase3 ep47/50] loss=0.0881
+[scratch phase3 ep48/50] loss=0.0988
+[scratch phase3 ep49/50] loss=0.0851
+[scratch phase3 ep50/50] loss=0.0676
+training complete: /kaggle/working/abl/scratch_s0/ckpt_stage3.pt
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+wrote 237 maps to /kaggle/working/abl/scratch_s0/maps
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+wrote 50 maps to /kaggle/working/abl/scratch_s0/calib
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+{
+  "miou": 0.3611289560485551,
+  "iou_crack": 0.13043838942718117,
+  "f1": 0.21451905983832145,
+  "precision": 0.1397672837655007,
+  "recall": 0.9249900254434722,
+  "n_images": 237,
+  "mu": 0.028145156561045326,
+  "delta": 0.02055413286817012,
+  "threshold": 0.5,
+  "pixel_auroc": 0.8893533519723557,
+  "pixel_ap": 0.5029403671427082
+}
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+{
+  "mu": 0.028145156561045326,
+  "delta": 0.02055413286817012,
+  "n_thresholds": 99,
+  "ods_f1": {
+    "t": 0.89,
+    "f1": 0.5107917806401192,
+    "miou": 0.6509635403026857,
+    "precision": 0.5393708409393009,
+    "recall": 0.48508889898205776
+  },
+  "best_miou": {
+    "t": 0.9,
+    "f1": 0.5100606107637201,
+    "miou": 0.6513852648320194,
+    "precision": 0.562795143964628,
+    "recall": 0.4663619732964627
+  },
+  "fixed_0.5": {
+    "t": 0.5,
+    "f1": 0.16752878304748264,
+    "miou": 0.34313910114189106,
+    "precision": 0.0923059442986861,
+    "recall": 0.9052161195894248
+  }
+}

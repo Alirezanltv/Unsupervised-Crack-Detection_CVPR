@@ -1,0 +1,212 @@
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+[ot stage1 ep1/50] loss=0.0089
+[ot stage1 ep2/50] loss=0.0049
+[ot stage1 ep3/50] loss=0.0048
+[ot stage1 ep4/50] loss=0.0036
+[ot stage1 ep5/50] loss=0.0038
+[ot stage1 ep6/50] loss=0.0034
+[ot stage1 ep7/50] loss=0.0037
+[ot stage1 ep8/50] loss=0.0035
+[ot stage1 ep9/50] loss=0.0035
+[ot stage1 ep10/50] loss=0.0034
+[ot stage1 ep11/50] loss=0.0036
+[ot stage1 ep12/50] loss=0.0033
+[ot stage1 ep13/50] loss=0.0031
+[ot stage1 ep14/50] loss=0.0033
+[ot stage1 ep15/50] loss=0.0036
+[ot stage1 ep16/50] loss=0.0032
+[ot stage1 ep17/50] loss=0.0037
+[ot stage1 ep18/50] loss=0.0034
+[ot stage1 ep19/50] loss=0.0033
+[ot stage1 ep20/50] loss=0.0036
+[ot stage1 ep21/50] loss=0.0026
+[ot stage1 ep22/50] loss=0.0038
+[ot stage1 ep23/50] loss=0.0034
+[ot stage1 ep24/50] loss=0.0038
+[ot stage1 ep25/50] loss=0.0034
+[ot stage1 ep26/50] loss=0.0039
+[ot stage1 ep27/50] loss=0.0032
+[ot stage1 ep28/50] loss=0.0031
+[ot stage1 ep29/50] loss=0.0031
+[ot stage1 ep30/50] loss=0.0038
+[ot stage1 ep31/50] loss=0.0032
+[ot stage1 ep32/50] loss=0.0026
+[ot stage1 ep33/50] loss=0.0028
+[ot stage1 ep34/50] loss=0.0031
+[ot stage1 ep35/50] loss=0.0029
+[ot stage1 ep36/50] loss=0.0032
+[ot stage1 ep37/50] loss=0.0033
+[ot stage1 ep38/50] loss=0.0029
+[ot stage1 ep39/50] loss=0.0032
+[ot stage1 ep40/50] loss=0.0033
+[ot stage1 ep41/50] loss=0.0029
+[ot stage1 ep42/50] loss=0.0032
+[ot stage1 ep43/50] loss=0.0031
+[ot stage1 ep44/50] loss=0.0032
+[ot stage1 ep45/50] loss=0.0028
+[ot stage1 ep46/50] loss=0.0026
+[ot stage1 ep47/50] loss=0.0030
+[ot stage1 ep48/50] loss=0.0036
+[ot stage1 ep49/50] loss=0.0029
+[ot stage1 ep50/50] loss=0.0026
+[ot phase2 ep1/50] loss=0.2109
+[ot phase2 ep2/50] loss=0.1678
+[ot phase2 ep3/50] loss=0.1900
+[ot phase2 ep4/50] loss=0.1555
+[ot phase2 ep5/50] loss=0.1820
+[ot phase2 ep6/50] loss=0.1610
+[ot phase2 ep7/50] loss=0.1199
+[ot phase2 ep8/50] loss=0.1514
+[ot phase2 ep9/50] loss=0.1363
+[ot phase2 ep10/50] loss=0.1410
+[ot phase2 ep11/50] loss=0.1256
+[ot phase2 ep12/50] loss=0.1032
+[ot phase2 ep13/50] loss=0.0955
+[ot phase2 ep14/50] loss=0.0887
+[ot phase2 ep15/50] loss=0.1248
+[ot phase2 ep16/50] loss=0.0909
+[ot phase2 ep17/50] loss=0.0903
+[ot phase2 ep18/50] loss=0.1177
+[ot phase2 ep19/50] loss=0.0926
+[ot phase2 ep20/50] loss=0.0904
+[ot phase2 ep21/50] loss=0.0807
+[ot phase2 ep22/50] loss=0.0931
+[ot phase2 ep23/50] loss=0.0849
+[ot phase2 ep24/50] loss=0.1133
+[ot phase2 ep25/50] loss=0.0911
+[ot phase2 ep26/50] loss=0.0705
+[ot phase2 ep27/50] loss=0.0816
+[ot phase2 ep28/50] loss=0.0726
+[ot phase2 ep29/50] loss=0.0900
+[ot phase2 ep30/50] loss=0.0894
+[ot phase2 ep31/50] loss=0.0751
+[ot phase2 ep32/50] loss=0.0678
+[ot phase2 ep33/50] loss=0.0676
+[ot phase2 ep34/50] loss=0.0588
+[ot phase2 ep35/50] loss=0.0732
+[ot phase2 ep36/50] loss=0.0660
+[ot phase2 ep37/50] loss=0.0629
+[ot phase2 ep38/50] loss=0.0736
+[ot phase2 ep39/50] loss=0.0491
+[ot phase2 ep40/50] loss=0.0697
+[ot phase2 ep41/50] loss=0.1075
+[ot phase2 ep42/50] loss=0.0605
+[ot phase2 ep43/50] loss=0.0799
+[ot phase2 ep44/50] loss=0.0511
+[ot phase2 ep45/50] loss=0.0480
+[ot phase2 ep46/50] loss=0.0485
+[ot phase2 ep47/50] loss=0.0514
+[ot phase2 ep48/50] loss=0.0517
+[ot phase2 ep49/50] loss=0.0469
+[ot phase2 ep50/50] loss=0.0468
+[ot phase3 ep1/50] loss=0.3324
+[ot phase3 ep2/50] loss=0.2985
+[ot phase3 ep3/50] loss=0.3733
+[ot phase3 ep4/50] loss=0.3345
+[ot phase3 ep5/50] loss=0.3323
+[ot phase3 ep6/50] loss=0.3160
+[ot phase3 ep7/50] loss=0.3091
+[ot phase3 ep8/50] loss=0.2737
+[ot phase3 ep9/50] loss=0.3193
+[ot phase3 ep10/50] loss=0.3452
+[ot phase3 ep11/50] loss=0.3259
+[ot phase3 ep12/50] loss=0.2679
+[ot phase3 ep13/50] loss=0.3344
+[ot phase3 ep14/50] loss=0.2501
+[ot phase3 ep15/50] loss=0.2965
+[ot phase3 ep16/50] loss=0.2627
+[ot phase3 ep17/50] loss=0.2894
+[ot phase3 ep18/50] loss=0.2811
+[ot phase3 ep19/50] loss=0.2738
+[ot phase3 ep20/50] loss=0.2756
+[ot phase3 ep21/50] loss=0.2899
+[ot phase3 ep22/50] loss=0.2662
+[ot phase3 ep23/50] loss=0.2790
+[ot phase3 ep24/50] loss=0.2843
+[ot phase3 ep25/50] loss=0.2614
+[ot phase3 ep26/50] loss=0.2381
+[ot phase3 ep27/50] loss=0.2904
+[ot phase3 ep28/50] loss=0.2967
+[ot phase3 ep29/50] loss=0.2745
+[ot phase3 ep30/50] loss=0.2387
+[ot phase3 ep31/50] loss=0.2923
+[ot phase3 ep32/50] loss=0.2737
+[ot phase3 ep33/50] loss=0.2770
+[ot phase3 ep34/50] loss=0.2620
+[ot phase3 ep35/50] loss=0.2985
+[ot phase3 ep36/50] loss=0.2628
+[ot phase3 ep37/50] loss=0.2605
+[ot phase3 ep38/50] loss=0.2099
+[ot phase3 ep39/50] loss=0.2667
+[ot phase3 ep40/50] loss=0.2605
+[ot phase3 ep41/50] loss=0.2691
+[ot phase3 ep42/50] loss=0.2615
+[ot phase3 ep43/50] loss=0.2691
+[ot phase3 ep44/50] loss=0.2537
+[ot phase3 ep45/50] loss=0.2299
+[ot phase3 ep46/50] loss=0.2295
+[ot phase3 ep47/50] loss=0.3078
+[ot phase3 ep48/50] loss=0.2403
+[ot phase3 ep49/50] loss=0.2408
+[ot phase3 ep50/50] loss=0.2243
+training complete: /kaggle/working/abl/ot_s1/ckpt_stage3.pt
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+wrote 237 maps to /kaggle/working/abl/ot_s1/maps
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+wrote 50 maps to /kaggle/working/abl/ot_s1/calib
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+{
+  "miou": 0.404694667666609,
+  "iou_crack": 0.1431486695609994,
+  "f1": 0.23384161225081398,
+  "precision": 0.1503924412247967,
+  "recall": 0.8731566928147381,
+  "n_images": 237,
+  "mu": 0.06856054084187452,
+  "delta": 0.08209336738770864,
+  "threshold": 0.5,
+  "pixel_auroc": 0.8660566540541694,
+  "pixel_ap": 0.22906395749374378
+}
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+{
+  "mu": 0.06856054084187452,
+  "delta": 0.08209336738770864,
+  "n_thresholds": 99,
+  "ods_f1": {
+    "t": 0.7,
+    "f1": 0.345454342157444,
+    "miou": 0.55775214932989,
+    "precision": 0.25072267037083096,
+    "recall": 0.5552450842870367
+  },
+  "best_miou": {
+    "t": 0.73,
+    "f1": 0.341799854841421,
+    "miou": 0.5604215507567932,
+    "precision": 0.2594691544869016,
+    "recall": 0.5006621502588617
+  },
+  "fixed_0.5": {
+    "t": 0.5,
+    "f1": 0.19329722686660747,
+    "miou": 0.38747223633306394,
+    "precision": 0.10850962871202476,
+    "recall": 0.884182754405038
+  }
+}
