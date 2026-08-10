@@ -49,6 +49,13 @@ fitted normal distribution.
    ```
    If it still lands at chance, that is informative and reportable *with* the
    contamination explanation.
+
+   **Outcome (2026-08-10): run and scored through the identical pipeline —
+   pixel AUROC 0.290, AP 0.028 (`results/deepcrack_draem_dtd_s0_*.json`).
+   Collapse confirmed and the ranking is inverted: trained on 100%-cracked
+   "normals", the model scores crack pixels as *less* anomalous than
+   background. The DTD source does not rescue the method; the report rule
+   above stands.**
 3. **Run the clean-normal comparison on Concrete.** The Ozgenel classification
    set has 20,000 genuinely crack-free (Negative) images, so on that dataset
    the one-class baselines can be trained under their intended assumption.

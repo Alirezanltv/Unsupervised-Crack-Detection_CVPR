@@ -1,7 +1,7 @@
 {
   "dataset": "DeepCrack official test split (237 images), committed splits seed 2027",
   "protocol": "matched 3xE epoch budget for every variant; identical eval pipeline as Table 1 (common/eval_maps.py + 99-point sweep)",
-  "status": "PARTIAL -- do not put in the paper until every variant has 3 seeds",
+  "status": "complete",
   "models": {
     "full": {
       "seeds": [
@@ -54,113 +54,137 @@
     "pretrain": {
       "seeds": [
         0,
+        1,
         2
       ],
       "auroc": {
-        "mean": 0.9193,
-        "std": 0.0083
+        "mean": 0.9101,
+        "std": 0.0169
       },
       "ap": {
-        "mean": 0.4312,
-        "std": 0.067
+        "mean": 0.378,
+        "std": 0.1036
       },
       "ods_f1": {
-        "mean": 0.4826,
-        "std": 0.0253
+        "mean": 0.4581,
+        "std": 0.046
       },
       "ods_miou": {
-        "mean": 0.6326,
-        "std": 0.0146
+        "mean": 0.6186,
+        "std": 0.0263
       }
     },
     "ot": {
       "seeds": [
         0,
-        1
+        1,
+        2
       ],
       "auroc": {
-        "mean": 0.8941,
-        "std": 0.0397
+        "mean": 0.9059,
+        "std": 0.0347
       },
       "ap": {
-        "mean": 0.3525,
-        "std": 0.1746
+        "mean": 0.3796,
+        "std": 0.1321
       },
       "ods_f1": {
-        "mean": 0.4155,
-        "std": 0.0991
+        "mean": 0.4418,
+        "std": 0.0835
       },
       "ods_miou": {
-        "mean": 0.5981,
-        "std": 0.0533
+        "mean": 0.6109,
+        "std": 0.0437
       }
     }
   },
   "component_deltas": {
     "source_pretraining (pretrain - scratch)": {
       "auroc": {
-        "delta": 0.062,
-        "t": 2.902,
-        "p": 0.0854
+        "delta": 0.0528,
+        "t": 2.326,
+        "p": 0.1069
       },
       "ap": {
-        "delta": 0.0451,
-        "t": 0.483,
-        "p": 0.6628
+        "delta": -0.0082,
+        "t": -0.081,
+        "p": 0.9393
       },
       "ods_f1": {
-        "delta": 0.0514,
-        "t": 0.872,
-        "p": 0.4625
+        "delta": 0.0269,
+        "t": 0.433,
+        "p": 0.6954
       },
       "ods_miou": {
-        "delta": 0.0182,
-        "t": 0.653,
-        "p": 0.5676
+        "delta": 0.0042,
+        "t": 0.141,
+        "p": 0.8965
       }
     },
     "ot_alignment (ot - pretrain)": {
       "auroc": {
-        "delta": -0.0252,
-        "t": -0.878,
-        "p": 0.5315
+        "delta": -0.0042,
+        "t": -0.189,
+        "p": 0.8626
       },
       "ap": {
-        "delta": -0.0786,
-        "t": -0.595,
-        "p": 0.6394
+        "delta": 0.0017,
+        "t": 0.017,
+        "p": 0.9872
       },
       "ods_f1": {
-        "delta": -0.067,
-        "t": -0.927,
-        "p": 0.5092
+        "delta": -0.0163,
+        "t": -0.297,
+        "p": 0.7854
       },
       "ods_miou": {
-        "delta": -0.0345,
-        "t": -0.884,
-        "p": 0.5229
+        "delta": -0.0077,
+        "t": -0.262,
+        "p": 0.8092
       }
     },
     "attention_gates (full - ot)": {
       "auroc": {
-        "delta": 0.0109,
-        "t": 0.375,
-        "p": 0.7651
+        "delta": -0.0009,
+        "t": -0.044,
+        "p": 0.9682
       },
       "ap": {
-        "delta": -0.0094,
-        "t": -0.072,
-        "p": 0.9526
+        "delta": -0.0364,
+        "t": -0.423,
+        "p": 0.6997
       },
       "ods_f1": {
-        "delta": 0.0314,
-        "t": 0.438,
-        "p": 0.7321
+        "delta": 0.0051,
+        "t": 0.102,
+        "p": 0.9269
       },
       "ods_miou": {
-        "delta": 0.0137,
-        "t": 0.354,
-        "p": 0.7783
+        "delta": 0.0009,
+        "t": 0.032,
+        "p": 0.9766
+      }
+    },
+    "whole_pipeline (full - scratch)": {
+      "auroc": {
+        "delta": 0.0477,
+        "t": 2.185,
+        "p": 0.1331
+      },
+      "ap": {
+        "delta": -0.0429,
+        "t": -0.478,
+        "p": 0.6649
+      },
+      "ods_f1": {
+        "delta": 0.0158,
+        "t": 0.27,
+        "p": 0.8093
+      },
+      "ods_miou": {
+        "delta": -0.0026,
+        "t": -0.096,
+        "p": 0.9308
       }
     }
   }

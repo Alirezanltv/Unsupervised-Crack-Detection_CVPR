@@ -95,6 +95,8 @@ def main():
                                          "ot_alignment (ot - pretrain)"))
     out["component_deltas"].update(delta(variants["full"][0], variants["ot"][0],
                                          "attention_gates (full - ot)"))
+    out["component_deltas"].update(delta(variants["full"][0], variants["scratch"][0],
+                                         "whole_pipeline (full - scratch)"))
 
     (R / "deepcrack_ablation_final.json").write_text(json.dumps(out, indent=2))
     print(json.dumps(out, indent=1))
