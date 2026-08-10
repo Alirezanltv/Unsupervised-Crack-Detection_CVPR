@@ -336,8 +336,11 @@ def train(args):
         opt = torch.optim.AdamW(list(model.enc_t.parameters()) +
                                 list(model.dec.parameters()),
                                 lr=1e-3, weight_decay=1e-4)
-        sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=E,
-                                                           last_epoch=ep0 - 1)
+        # A fresh optimizer has no 'initial_lr' in its param groups, so
+        # last_epoch>=0 at construction raises; build at -1 and fast-forward.
+        sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=E)
+        for _ in range(ep0):
+            sched.step()
         for ep in range(ep0, E):
             for x in src:
                 x = x.to(dev)
@@ -500,8 +503,11 @@ def train_variant(args):
         opt = torch.optim.AdamW(list(model.enc_t.parameters()) +
                                 list(model.dec.parameters()),
                                 lr=1e-3, weight_decay=1e-4)
-        sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=E,
-                                                           last_epoch=ep0 - 1)
+        # A fresh optimizer has no 'initial_lr' in its param groups, so
+        # last_epoch>=0 at construction raises; build at -1 and fast-forward.
+        sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=E)
+        for _ in range(ep0):
+            sched.step()
         for ep in range(ep0, E):
             for x in src:
                 x = x.to(dev)

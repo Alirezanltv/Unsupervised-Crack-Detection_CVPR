@@ -53,23 +53,24 @@
     },
     "pretrain": {
       "seeds": [
-        0
+        0,
+        2
       ],
       "auroc": {
-        "mean": 0.9251,
-        "std": null
+        "mean": 0.9193,
+        "std": 0.0083
       },
       "ap": {
-        "mean": 0.4786,
-        "std": null
+        "mean": 0.4312,
+        "std": 0.067
       },
       "ods_f1": {
-        "mean": 0.5004,
-        "std": null
+        "mean": 0.4826,
+        "std": 0.0253
       },
       "ods_miou": {
-        "mean": 0.6429,
-        "std": null
+        "mean": 0.6326,
+        "std": 0.0146
       }
     },
     "ot": {
@@ -98,30 +99,46 @@
   "component_deltas": {
     "source_pretraining (pretrain - scratch)": {
       "auroc": {
-        "delta": 0.0678
+        "delta": 0.062,
+        "t": 2.902,
+        "p": 0.0854
       },
       "ap": {
-        "delta": 0.0924
+        "delta": 0.0451,
+        "t": 0.483,
+        "p": 0.6628
       },
       "ods_f1": {
-        "delta": 0.0693
+        "delta": 0.0514,
+        "t": 0.872,
+        "p": 0.4625
       },
       "ods_miou": {
-        "delta": 0.0285
+        "delta": 0.0182,
+        "t": 0.653,
+        "p": 0.5676
       }
     },
     "ot_alignment (ot - pretrain)": {
       "auroc": {
-        "delta": -0.031
+        "delta": -0.0252,
+        "t": -0.878,
+        "p": 0.5315
       },
       "ap": {
-        "delta": -0.126
+        "delta": -0.0786,
+        "t": -0.595,
+        "p": 0.6394
       },
       "ods_f1": {
-        "delta": -0.0849
+        "delta": -0.067,
+        "t": -0.927,
+        "p": 0.5092
       },
       "ods_miou": {
-        "delta": -0.0449
+        "delta": -0.0345,
+        "t": -0.884,
+        "p": 0.5229
       }
     },
     "attention_gates (full - ot)": {

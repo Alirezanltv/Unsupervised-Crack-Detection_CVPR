@@ -1,0 +1,17 @@
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+/kaggle/working/pyshim/sitecustomize.py:8: FutureWarning: In the future `np.str` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np,_n): setattr(np,_n,_t)
+Traceback (most recent call last):
+  File "/kaggle/working/Unsupervised-Crack-Detection_CVPR/p0_reproduce/agdscae_ref.py", line 594, in <module>
+    main()
+  File "/kaggle/working/Unsupervised-Crack-Detection_CVPR/p0_reproduce/agdscae_ref.py", line 590, in main
+    train_variant(args)
+  File "/kaggle/working/Unsupervised-Crack-Detection_CVPR/p0_reproduce/agdscae_ref.py", line 503, in train_variant
+    sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=E,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/optim/lr_scheduler.py", line 1398, in __init__
+    super().__init__(optimizer, last_epoch)
+  File "/usr/local/lib/python3.12/dist-packages/torch/optim/lr_scheduler.py", line 139, in __init__
+    raise KeyError(
+KeyError: "param 'initial_lr' is not specified in param_groups[0] when resuming scheduler with last_epoch >= 0.\nThis typically happens when:\n1. You're trying to resume training from a checkpoint but haven't properly loaded the optimizer state\n2. You're using last_epoch >= 0 for a fresh training run (not recommended)"

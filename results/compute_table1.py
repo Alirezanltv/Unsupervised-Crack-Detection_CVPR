@@ -85,6 +85,12 @@ def main():
                                "ods_miou": 0.5199, "n_seeds": 1},
             "draem_s0": {"auroc": 0.4996, "ap": 0.0432, "n_seeds": 1,
                          "status": "collapse under contaminated normals; report only with explanation"},
+            "draem_dtd_s0": {"auroc": 0.2901, "ap": 0.0278, "ods_f1": 0.0827,
+                             "n_seeds": 1,
+                             "status": ("fairness rerun with the method's original DTD anomaly source "
+                                        "(300 epochs, batch 8): still collapsed, ranking inverted -- "
+                                        "cracks scored as normal; artifacts in "
+                                        "deepcrack_draem_dtd_s0_{result,sweep}.json")},
         },
         "welch_holm": {},
     }
