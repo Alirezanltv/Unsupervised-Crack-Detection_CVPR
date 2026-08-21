@@ -30,7 +30,11 @@ from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFile
+
+# a few JPEGs in the Ozgenel segmentation mirror are missing their final
+# bytes; load them anyway rather than aborting the whole arrangement
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 EXTS = {".jpg", ".jpeg", ".png", ".bmp"}
 
