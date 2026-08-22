@@ -1,0 +1,181 @@
+{
+  "dataset": "Ozgenel concrete: 250 clean-normal train / 50 calib images (classification set Negative, seed 2027, committed lists); 446 stem-matched segmentation test pairs at max side 512",
+  "protocol": "CLEAN-NORMAL regime: one-class baselines trained on genuinely crack-free images (their intended assumption); ours trained on the same unlabeled images; identical scoring engine and 99-point sweep as the DeepCrack arm",
+  "models": {
+    "ours": {
+      "auroc": {
+        "mean": 0.7568,
+        "std": 0.0134,
+        "n_seeds": 3
+      },
+      "ap": {
+        "mean": 0.1205,
+        "std": 0.0238,
+        "n_seeds": 3
+      },
+      "ods_f1": {
+        "mean": 0.227,
+        "std": 0.0152,
+        "n_seeds": 3
+      },
+      "ods_miou": {
+        "mean": 0.546,
+        "std": 0.0038,
+        "n_seeds": 3
+      }
+    },
+    "padim": {
+      "auroc": {
+        "mean": 0.7442,
+        "std": 0.0051,
+        "n_seeds": 5
+      },
+      "ap": {
+        "mean": 0.0609,
+        "std": 0.0065,
+        "n_seeds": 5
+      },
+      "ods_f1": {
+        "mean": 0.1184,
+        "std": 0.008,
+        "n_seeds": 5
+      },
+      "ods_miou": {
+        "mean": 0.4781,
+        "std": 0.0114,
+        "n_seeds": 5
+      }
+    },
+    "patchcore": {
+      "auroc": {
+        "mean": 0.7497,
+        "std": 0.0011,
+        "n_seeds": 5
+      },
+      "ap": {
+        "mean": 0.0564,
+        "std": 0.001,
+        "n_seeds": 5
+      },
+      "ods_f1": {
+        "mean": 0.0791,
+        "std": 0.001,
+        "n_seeds": 5
+      },
+      "ods_miou": {
+        "mean": 0.4232,
+        "std": 0.0021,
+        "n_seeds": 5
+      }
+    },
+    "rd4ad_s0": {
+      "auroc": {
+        "mean": 0.7577,
+        "std": null,
+        "n_seeds": 1
+      },
+      "ap": {
+        "mean": 0.085,
+        "std": null,
+        "n_seeds": 1
+      },
+      "ods_f1": {
+        "mean": 0.0701,
+        "std": null,
+        "n_seeds": 1
+      },
+      "ods_miou": {
+        "mean": 0.3946,
+        "std": null,
+        "n_seeds": 1
+      }
+    },
+    "efficientad_s0": {
+      "auroc": {
+        "mean": 0.7315,
+        "std": null,
+        "n_seeds": 1
+      },
+      "ap": {
+        "mean": 0.0846,
+        "std": null,
+        "n_seeds": 1
+      },
+      "ods_f1": {
+        "mean": 0.1823,
+        "std": null,
+        "n_seeds": 1
+      },
+      "ods_miou": {
+        "mean": 0.5242,
+        "std": null,
+        "n_seeds": 1
+      }
+    },
+    "draem_dtd_s0": {
+      "status": "PENDING -- single 300-epoch job, to be run in a dedicated session"
+    }
+  },
+  "welch_holm": {
+    "ours_vs_padim": {
+      "auroc": {
+        "t": 1.563,
+        "p": 0.2401,
+        "direction": "ours_higher",
+        "p_holm": 0.2401,
+        "significant_at_0.05": false
+      },
+      "ap": {
+        "t": 4.238,
+        "p": 0.0441,
+        "direction": "ours_higher",
+        "p_holm": 0.0882,
+        "significant_at_0.05": false
+      },
+      "ods_f1": {
+        "t": 11.449,
+        "p": 0.0023,
+        "direction": "ours_higher",
+        "p_holm": 0.0069,
+        "significant_at_0.05": true
+      },
+      "ods_miou": {
+        "t": 12.235,
+        "p": 0.0,
+        "direction": "ours_higher",
+        "p_holm": 0.0,
+        "significant_at_0.05": true
+      }
+    },
+    "ours_vs_patchcore": {
+      "auroc": {
+        "t": 0.926,
+        "p": 0.4513,
+        "direction": "ours_higher",
+        "p_holm": 0.4513,
+        "significant_at_0.05": false
+      },
+      "ap": {
+        "t": 4.653,
+        "p": 0.043,
+        "direction": "ours_higher",
+        "p_holm": 0.086,
+        "significant_at_0.05": false
+      },
+      "ods_f1": {
+        "t": 16.824,
+        "p": 0.0034,
+        "direction": "ours_higher",
+        "p_holm": 0.0102,
+        "significant_at_0.05": true
+      },
+      "ods_miou": {
+        "t": 51.473,
+        "p": 0.0,
+        "direction": "ours_higher",
+        "p_holm": 0.0,
+        "significant_at_0.05": true
+      }
+    }
+  }
+}
