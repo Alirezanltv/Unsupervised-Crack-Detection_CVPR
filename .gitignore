@@ -15,3 +15,6 @@ DRAEM+DTD/
 sessionB_unpacked/
 bundle.zip
 sessionC_unpacked/
+concreteC1_unpacked/
+concrete_results.zip
+concrete_ckpts.zip
