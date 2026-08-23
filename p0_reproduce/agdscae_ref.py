@@ -252,6 +252,43 @@ class MnistSource(Dataset):
         return x.repeat(3, 1, 1)
 
 
+class EdgeFolderSource(Dataset):
+    """Source domain from a folder of pre-rendered edge maps (the Reviewer-4
+    control: swap MNIST strokes for Canny/HED edge maps, everything else
+    identical). Maps are grayscale images already at working resolution, so
+    no upsampling happens here; that step belongs to MNIST's 28x28 origin,
+    not to the protocol. Subsampling mirrors load_mnist: seeded, replace-free."""
+
+    def __init__(self, folder, subset, seed):
+        from PIL import Image
+        self.Image = Image
+        self.paths = sorted(p for p in Path(folder).iterdir()
+                            if p.suffix.lower() in {".png", ".jpg", ".jpeg"})
+        if not self.paths:
+            raise SystemExit(f"no edge maps found in {folder}")
+        if subset and subset < len(self.paths):
+            idx = np.random.default_rng(seed).choice(len(self.paths), subset,
+                                                     replace=False)
+            self.paths = [self.paths[i] for i in sorted(idx)]
+
+    def __len__(self):
+        return len(self.paths)
+
+    def __getitem__(self, i):
+        im = self.Image.open(self.paths[i]).convert("L")
+        if im.size != (256, 256):
+            im = im.resize((256, 256), self.Image.BILINEAR)
+        x = torch.from_numpy(np.asarray(im).astype(np.float32) / 255.0)
+        return x[None].repeat(3, 1, 1)
+
+
+def make_source(args, out):
+    if getattr(args, "source_dir", None):
+        return EdgeFolderSource(Path(args.source_dir), args.source_subset,
+                                args.seed)
+    return MnistSource(load_mnist(out / "mnist", args.source_subset, args.seed))
+
+
 class CrackSet(Dataset):
     def __init__(self, raw_root: Path, listfile: Path, augment: bool):
         from PIL import Image
@@ -311,8 +348,7 @@ def train(args):
     out = Path(args.out)
     E = args.stage_epochs
 
-    src = DataLoader(MnistSource(load_mnist(out / "mnist", args.source_subset,
-                                            args.seed)),
+    src = DataLoader(make_source(args, out),
                      batch_size=32, shuffle=True, num_workers=2, drop_last=True)
     tgt = DataLoader(CrackSet(Path(args.raw_root),
                               Path(args.splits) / f"{args.name}_train.txt", True),
@@ -493,8 +529,7 @@ def train_variant(args):
         return
 
     # pretrain and ot variants share the paper's stage 1
-    src = DataLoader(MnistSource(load_mnist(out / "mnist", args.source_subset,
-                                            args.seed)),
+    src = DataLoader(make_source(args, out),
                      batch_size=32, shuffle=True, num_workers=2, drop_last=True)
     ep0, st = stage_state(1)
     if st is not None:
@@ -572,6 +607,9 @@ def main():
     t.add_argument("--out", required=True)
     t.add_argument("--seed", type=int, default=0)
     t.add_argument("--stage-epochs", type=int, default=50)
+    t.add_argument("--source-dir", default=None,
+                   help="folder of pre-rendered edge maps to use as the "
+                        "source domain instead of MNIST (Reviewer-4 control)")
     t.add_argument("--source-subset", type=int, default=70000,
                    help="reduce for smoke runs / slow GPUs; paper uses 70000")
     t.add_argument("--variant", default="full",

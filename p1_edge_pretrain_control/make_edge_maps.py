@@ -58,10 +58,16 @@ def main():
     ap.add_argument("--detector", choices=["canny", "hed"], default="canny")
     ap.add_argument("--size", type=int, default=256)
     ap.add_argument("--hed-dir", type=Path, default=Path("hed_model"))
+    ap.add_argument("--crops", type=int, default=1,
+                    help="seeded random crops per source image, so a small "
+                         "corpus (e.g. BSDS500's 500 images x 40 crops) can "
+                         "match the 20k-image MNIST source-set size")
+    ap.add_argument("--seed", type=int, default=2027)
     args = ap.parse_args()
 
     args.dst.mkdir(parents=True, exist_ok=True)
     hed = Hed(args.hed_dir) if args.detector == "hed" else None
+    rng = np.random.default_rng(args.seed)
     n = 0
     for p in sorted(args.src.rglob("*")):
         if p.suffix.lower() not in EXTS:
@@ -69,13 +75,27 @@ def main():
         img = cv2.imread(str(p))
         if img is None:
             continue
-        img = cv2.resize(img, (args.size, args.size), interpolation=cv2.INTER_AREA)
-        if args.detector == "canny":
-            edge = canny_map(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY))
-        else:
-            edge = hed(img)
-        cv2.imwrite(str(args.dst / f"{p.stem}.png"), edge)
-        n += 1
+        h, w = img.shape[:2]
+        if min(h, w) < args.size:
+            scale = args.size / min(h, w)
+            img = cv2.resize(img, (max(args.size, int(w * scale)),
+                                   max(args.size, int(h * scale))),
+                             interpolation=cv2.INTER_AREA)
+            h, w = img.shape[:2]
+        for k in range(args.crops):
+            if args.crops == 1:
+                crop = cv2.resize(img, (args.size, args.size),
+                                  interpolation=cv2.INTER_AREA)
+            else:
+                y = int(rng.integers(0, h - args.size + 1))
+                x = int(rng.integers(0, w - args.size + 1))
+                crop = img[y:y + args.size, x:x + args.size]
+            if args.detector == "canny":
+                edge = canny_map(cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY))
+            else:
+                edge = hed(crop)
+            cv2.imwrite(str(args.dst / f"{p.stem}_{k:03d}.png"), edge)
+            n += 1
     print(f"wrote {n} edge maps to {args.dst}")
 
 
