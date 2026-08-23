@@ -113,7 +113,7 @@
       }
     },
     "draem_dtd_s0": {
-      "status": "PENDING -- single 300-epoch job, to be run in a dedicated session"
+      "status": "INTERRUPTED at epoch 132/300 by Kaggle infrastructure failure (filesystem went read-only; SIGBUS). No maps exported; no number enters the table. On-the-fly validation at interruption: pixel AUROC 0.775, in the other methods' range -- directional only. Full record: results/logs/concrete/draem_dtd_interrupted_ep132.log"
     }
   },
   "welch_holm": {

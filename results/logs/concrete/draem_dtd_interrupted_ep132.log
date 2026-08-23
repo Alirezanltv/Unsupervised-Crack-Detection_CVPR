@@ -1,0 +1,32 @@
+# DRAEM+DTD on the Concrete/Ozgenel clean-normal arm -- INTERRUPTED RUN RECORD
+# 2026-08-23. Kaggle T4, batch 8, target 300 epochs, DTD anomaly source,
+# identical protocol to every other Table-2 method.
+#
+# The run was killed at epoch 132/299 by a Kaggle infrastructure failure:
+# the VM's filesystem went read-only mid-training ([Errno 30]/[Errno 5]
+# I/O errors on /tmp and on installed packages, terminating in SIGBUS /
+# "Bus error (core dumped)", exit 135). No maps were exported; no number
+# from this run enters any table. Kept because the last on-the-fly
+# validation readout is an honest directional observation:
+#
+#   Epoch 132/299   train_loss_epoch: 0.221
+#                   pixel_AUROC:      0.775
+#                   pixel_F1Score:    0.129
+#
+# i.e. with genuinely clean normals DRAEM was functioning and tracking the
+# other methods' range (final AUROCs 0.73-0.76), in sharp contrast to its
+# collapse (0.316 final, same metric) under DeepCrack's contaminated
+# normals -- consistent with the paper's Sec. 4.3 explanation.
+#
+# Final log excerpt (verbatim tail):
+Epoch 132/299                  0/25 0:00:00 train_loss_step: 0.184
+                               pixel_AUROC: 0.775
+                               pixel_F1Score: 0.129
+                               train_loss_epoch: 0.221
+OSError: [Errno 30] Read-only file system: '/tmp/pymp-c6l3e1tw/listener-2dlnkfwq'
+OSError: [Errno 5] Input/output error: '/tmp/pymp-c6l3e1tw'
+  File "/usr/local/lib/python3.12/dist-packages/anomalib/data/utils/augmenter.py", line 114, in generate_perturbation
+  File "/usr/local/lib/python3.12/dist-packages/PIL/Image.py", line 3524, in open
+OSError: [Errno 5] Input/output error
+Bus error (core dumped)
+CalledProcessError: ... exit status 135.
