@@ -1,120 +1,179 @@
-# Edge-source control session (Reviewer-4 control): Canny maps vs. MNIST
+# Edge-source control session (Canny maps vs. MNIST) -- paste-ready Kaggle cells
 
-Purpose: answer "why MNIST and not a hand-engineered edge prior?" with data. Stage-1
-pretrains on Canny edge maps of natural images (BSDS500) instead of digits; stages 2-3,
-splits, scoring and sweeps stay byte-identical to the main runs. 3 seeds, DeepCrack arm.
+Purpose: answer "why MNIST and not a hand-engineered edge prior?" with data. Stage 1
+pretrains on Canny edge maps of BSDS500 natural images instead of digits; stages 2-3,
+splits, scoring and sweeps stay identical. 3 seeds, DeepCrack arm, ~6.5 h on T4x2.
 
-Budget: ~6 h on T4x2 (GPU0: seeds 0-1 back-to-back, GPU1: seed 2). One session.
-Everything below was smoke-tested end-to-end on CPU (generator -> folder source ->
-3-stage training) before commit; the MNIST default path is regression-checked unchanged.
+Notebook settings: accelerator T4 x2, Persistence "Variables and Files", run interactively
+(the persisted clone carries the private-repo credentials; a clean commit run would not).
+No pip installs: everything needed is preinstalled on Kaggle.
 
-Kaggle notebook: T4 x2, Persistence "Variables and Files", run interactively as usual.
+Cell 1 fails fast on any environment problem. Cell 3 runs a ~5-minute full-chain smoke test
+on the GPU BEFORE launching the 6-hour jobs, so a broken pipeline errors out in minutes,
+not hours. Results are zipped automatically after every finished job and the metrics table
+is printed at the end, so nothing needs to be run by hand afterwards.
 
-## Cell 1 — deps (light; no anomalib needed this session)
+If the session disconnects: re-run Cells 1-3. Training resumes from the last epoch
+checkpoint; finished jobs are skipped; the smoke test re-runs (5 min).
+
+---------------------------------------------------------------------------------------
+## Cell 1 -- preflight (fails loudly, costs 30 seconds)
 
 ```python
-!pip install -q scikit-learn scikit-image
-import torch; print("cuda", torch.cuda.is_available(), "| gpus", torch.cuda.device_count())
-```
-
-## Cell 2 — repo + data + edge-map generation
-
-```python
-import os
+import os, shutil, subprocess, importlib
 os.chdir("/kaggle/working/Unsupervised-Crack-Detection_CVPR")
-!git fetch origin && git reset --hard origin/main
-assert "--source-dir" in open("p0_reproduce/agdscae_ref.py").read(), "pull did not bring the edge-source support"
-
-# DeepCrack (identical arrangement to every prior session)
-!mkdir -p /kaggle/temp && wget -q https://raw.githubusercontent.com/yhlleo/DeepCrack/master/dataset/DeepCrack.zip -O /kaggle/temp/dc.zip && unzip -q -o /kaggle/temp/dc.zip -d /kaggle/temp/deepcrack_raw
-!python p0_reproduce/arrange_from_splits.py --raw-root /kaggle/temp/deepcrack_raw --splits p0_reproduce/splits --name deepcrack --dst /kaggle/temp/data/deepcrack --masks-dir /kaggle/temp/deepcrack_raw/test_lab
-
-# BSDS500 -> 20,000 Canny maps (500 images x 40 seeded crops, matching MNIST's 20k)
-!wget -q https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/BSR/BSR_bsds500.tgz -O /kaggle/temp/bsr.tgz && tar xzf /kaggle/temp/bsr.tgz -C /kaggle/temp
-!python p1_edge_pretrain_control/make_edge_maps.py --src /kaggle/temp/BSR/BSDS500/data/images --dst /kaggle/temp/canny_maps --detector canny --size 256 --crops 40 --seed 2027
-!ls /kaggle/temp/canny_maps | wc -l
+print(subprocess.run("git fetch origin && git reset --hard origin/main", shell=True,
+                     capture_output=True, text=True).stdout.strip()[-200:])
+assert "--source-dir" in open("p0_reproduce/agdscae_ref.py").read(), "trainer lacks --source-dir: push the latest commits, then re-run"
+assert "--crops" in open("p1_edge_pretrain_control/make_edge_maps.py").read(), "generator lacks --crops: push the latest commits, then re-run"
+import torch
+assert torch.cuda.is_available() and torch.cuda.device_count() >= 2, f"need 2 GPUs, found {torch.cuda.device_count()}"
+for m in ("sklearn", "scipy", "cv2", "PIL", "numpy"):
+    importlib.import_module(m)
+free_gb = shutil.disk_usage("/kaggle/working").free / 1e9
+assert free_gb > 5, f"only {free_gb:.1f} GB free in /kaggle/working"
+print(f"PREFLIGHT OK | commit {subprocess.run('git rev-parse --short HEAD', shell=True, capture_output=True, text=True).stdout.strip()} | {torch.cuda.device_count()} GPUs | {free_gb:.0f} GB free")
 ```
 
-Expect the DeepCrack counts line, then `wrote 20000 edge maps`, then `20000`.
-(If the Berkeley server is ever down, attach the Kaggle dataset
-`balraj98/berkeley-segmentation-dataset-500-bsds500` via kagglehub instead and point
-`--src` at its images directory.)
-
-## Cell 3 — launcher
+## Cell 2 -- data (DeepCrack + 20,000 Canny maps; ~5 minutes)
 
 ```python
-import subprocess, os, time
-DATA, RAW = "/kaggle/temp/data/deepcrack", "/kaggle/temp/deepcrack_raw"
+import os, subprocess, glob
+os.chdir("/kaggle/working/Unsupervised-Crack-Detection_CVPR")
+def sh(cmd):
+    r = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    if r.returncode != 0:
+        raise RuntimeError(f"FAILED: {cmd}\n{r.stdout[-800:]}\n{r.stderr[-800:]}")
+    return r.stdout
 
-def chain(out, train_cmd):
-    return (f"{train_cmd} && "
-        f"python -u p0_reproduce/agdscae_ref.py dump --ckpt {out}/ckpt_stage3.pt --images {DATA}/test/images --out {out}/maps && "
-        f"python -u p0_reproduce/agdscae_ref.py dump --ckpt {out}/ckpt_stage3.pt --images {DATA}/calib --out {out}/calib && "
-        f"python -u common/eval_maps.py --maps {out}/maps --masks {DATA}/test/masks --calib {out}/calib --out {out}/result.json && "
-        f"python -u common/sweep_threshold.py --maps {out}/maps --masks {DATA}/test/masks --calib {out}/calib --out {out}/sweep.json")
+sh("mkdir -p /kaggle/temp")
+if not os.path.isdir("/kaggle/temp/data/deepcrack/test/masks"):
+    sh("wget -q https://raw.githubusercontent.com/yhlleo/DeepCrack/master/dataset/DeepCrack.zip -O /kaggle/temp/dc.zip && unzip -q -o /kaggle/temp/dc.zip -d /kaggle/temp/deepcrack_raw")
+    print(sh("python p0_reproduce/arrange_from_splits.py --raw-root /kaggle/temp/deepcrack_raw --splits p0_reproduce/splits --name deepcrack --dst /kaggle/temp/data/deepcrack --masks-dir /kaggle/temp/deepcrack_raw/test_lab").strip())
+counts = {s: len(os.listdir(f"/kaggle/temp/data/deepcrack/{s}")) for s in ("train/good", "calib", "test/images", "test/masks")}
+assert counts == {"train/good": 250, "calib": 50, "test/images": 237, "test/masks": 237}, counts
 
-def ejob(seed):
-    out = f"/kaggle/working/edgectl/canny_s{seed}"
-    return (f"canny_s{seed}", chain(out,
-        f"python -u p0_reproduce/agdscae_ref.py train --raw-root {RAW} --splits p0_reproduce/splits "
-        f"--name deepcrack --out {out} --seed {seed} --stage-epochs 50 --source-subset 20000 "
-        f"--source-dir /kaggle/temp/canny_maps"))
-
-JOBS = {0: [ejob(0), ejob(1)],
-        1: [ejob(2)]}
-
-def launch(gpu, name, cmd):
-    env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(gpu),
-               PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True")
-    return name, subprocess.Popen(cmd, shell=True, env=env,
-        stdout=open(f"/kaggle/working/{name}.log", "w"), stderr=subprocess.STDOUT)
-
-def tail(p):
+if len(glob.glob("/kaggle/temp/canny_maps/*.png")) != 20000:
     try:
-        L = open(p, errors="replace").read().splitlines()
-        return L[-1][-110:] if L else ""
+        sh("wget -q https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/BSR/BSR_bsds500.tgz -O /kaggle/temp/bsr.tgz && tar xzf /kaggle/temp/bsr.tgz -C /kaggle/temp")
+        src = "/kaggle/temp/BSR/BSDS500/data/images"
+    except RuntimeError:
+        import kagglehub
+        src = kagglehub.dataset_download("balraj98/berkeley-segmentation-dataset-500-bsds500")
+    print(sh(f"python p1_edge_pretrain_control/make_edge_maps.py --src {src} --dst /kaggle/temp/canny_maps --detector canny --size 256 --crops 40 --seed 2027").strip())
+n_maps = len(glob.glob("/kaggle/temp/canny_maps/*.png"))
+assert n_maps == 20000, f"expected 20000 Canny maps, got {n_maps}"
+print("DATA OK |", counts, "| canny maps:", n_maps)
+```
+
+## Cell 3 -- smoke test, then the real jobs, with automatic zipping and a printed table
+
+```python
+import subprocess, os, time, json, glob, shutil
+os.chdir("/kaggle/working/Unsupervised-Crack-Detection_CVPR")
+DATA, RAW, MAPS = "/kaggle/temp/data/deepcrack", "/kaggle/temp/deepcrack_raw", "/kaggle/temp/canny_maps"
+OUT = "/kaggle/working/edgectl"
+
+def chain(out, epochs, subset):
+    return (f"python -u p0_reproduce/agdscae_ref.py train --raw-root {RAW} --splits p0_reproduce/splits "
+            f"--name deepcrack --out {out} --seed {out[-1]} --stage-epochs {epochs} --source-subset {subset} "
+            f"--source-dir {MAPS} && "
+            f"python -u p0_reproduce/agdscae_ref.py dump --ckpt {out}/ckpt_stage3.pt --images {DATA}/test/images --out {out}/maps && "
+            f"python -u p0_reproduce/agdscae_ref.py dump --ckpt {out}/ckpt_stage3.pt --images {DATA}/calib --out {out}/calib && "
+            f"python -u common/eval_maps.py --maps {out}/maps --masks {DATA}/test/masks --calib {out}/calib --out {out}/result.json && "
+            f"python -u common/sweep_threshold.py --maps {out}/maps --masks {DATA}/test/masks --calib {out}/calib --out {out}/sweep.json")
+
+def env_for(gpu):
+    return dict(os.environ, CUDA_VISIBLE_DEVICES=str(gpu), PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True")
+
+# ---- 1. smoke test: the entire chain at toy size on GPU0 (~5 min). Fails here, not at hour 6.
+smoke = f"{OUT}/_smoke_s0"
+shutil.rmtree(smoke, ignore_errors=True)
+r = subprocess.run(chain(smoke, 1, 64), shell=True, env=env_for(0), capture_output=True, text=True)
+if r.returncode != 0 or not os.path.exists(f"{smoke}/sweep.json"):
+    print(r.stdout[-1500:]); print(r.stderr[-1500:])
+    raise SystemExit("SMOKE TEST FAILED -- nothing launched. Paste the output above.")
+print("SMOKE TEST OK: full chain (train/dump/eval/sweep) runs with the Canny source. Launching real jobs.", flush=True)
+
+# ---- 2. real jobs
+JOBS = {0: [f"{OUT}/canny_s0", f"{OUT}/canny_s1"],
+        1: [f"{OUT}/canny_s2"]}
+
+def zip_results():
+    subprocess.run(f"cd /kaggle/working && rm -f edgectl_results.zip && find edgectl -path '*canny_s*' \\( -name result.json -o -name sweep.json \\) | zip -q edgectl_results.zip -@", shell=True)
+
+def launch(gpu, out):
+    name = os.path.basename(out)
+    return name, subprocess.Popen(chain(out, 50, 20000), shell=True, env=env_for(gpu),
+                                  stdout=open(f"/kaggle/working/{name}.log", "w"), stderr=subprocess.STDOUT)
+
+def tail(name, n=1):
+    try:
+        L = open(f"/kaggle/working/{name}.log", errors="replace").read().splitlines()
+        return "\n".join(L[-n:]) if L else ""
     except FileNotFoundError:
         return "(no log)"
 
 state = {g: {"q": list(j), "cur": None} for g, j in JOBS.items()}
+failed, t0, last_print = [], time.time(), 0
 while any(s["q"] or s["cur"] for s in state.values()):
     for g, s in state.items():
         if s["cur"] is None and s["q"]:
-            s["cur"] = launch(g, *s["q"].pop(0))
+            s["cur"] = launch(g, s["q"].pop(0))
             print(f"[{time.strftime('%H:%M:%S')}] GPU{g} START {s['cur'][0]}", flush=True)
         elif s["cur"] and s["cur"][1].poll() is not None:
-            print(f"[{time.strftime('%H:%M:%S')}] GPU{g} {s['cur'][0]} EXIT {s['cur'][1].returncode}", flush=True)
+            name, rc = s["cur"][0], s["cur"][1].returncode
+            print(f"[{time.strftime('%H:%M:%S')}] GPU{g} {name} EXIT {rc}", flush=True)
+            if rc != 0:
+                failed.append(name); print("---- last 25 log lines of", name); print(tail(name, 25)); print("----", flush=True)
+            zip_results()
             s["cur"] = None
     time.sleep(60)
-    for g, s in state.items():
-        if s["cur"]:
-            print(f"[{time.strftime('%H:%M:%S')}] GPU{g} {s['cur'][0]:12s} | {tail('/kaggle/working/' + s['cur'][0] + '.log')}", flush=True)
-print("SESSION DONE")
+    if time.time() - last_print > 300:
+        last_print = time.time()
+        for g, s in state.items():
+            if s["cur"]:
+                print(f"[{time.strftime('%H:%M:%S')}] GPU{g} {s['cur'][0]:9s} | {tail(s['cur'][0])[-100:]}", flush=True)
+
+zip_results()
+print(f"\nSESSION DONE in {(time.time()-t0)/3600:.1f} h | failed jobs: {failed or 'none'}")
+
+# ---- 3. print the numbers so they can be pasted directly
+rows = []
+for d in sorted(glob.glob(f"{OUT}/canny_s*")):
+    try:
+        res = json.load(open(f"{d}/result.json")); sw = json.load(open(f"{d}/sweep.json")); sw = sw.get("summary", sw)
+        rows.append((os.path.basename(d), res["pixel_auroc"], res["pixel_ap"], sw["ods_f1"]["f1"], sw["best_miou"]["miou"]))
+    except Exception as e:
+        rows.append((os.path.basename(d), None, None, None, None))
+print("\n==== EDGE-SOURCE CONTROL (Canny maps as source) -- paste this block ====")
+print(f"{'run':10s} {'AUROC':>8s} {'AP':>8s} {'ODS-F1':>8s} {'MIoU':>8s}")
+for r in rows:
+    print(f"{r[0]:10s} " + " ".join(f"{v:8.4f}" if v is not None else "   FAILED" for v in r[1:]))
+print("=" * 70)
+print("zip ready: /kaggle/working/edgectl_results.zip")
 ```
 
-Stage-1 losses will NOT match the MNIST runs' familiar 0.006x (different source content —
-Canny maps are sparser than digit strokes, so expect a different loss scale). That is
-correct behavior, not a bug. Stages 2-3 operate on the same crack data as always.
-
-## Cell 4 — bundle
+## Cell 4 -- re-zip + reprint (safe any time, e.g. after a resume)
 
 ```python
-!cd /kaggle/working && find . -path "./edgectl/*" \( -name "result.json" -o -name "sweep.json" \) | zip -q edgectl_results.zip -@
-!cd /kaggle/working && zip -qr edgectl_ckpts.zip edgectl -i "*stage3.pt" 2>/dev/null; ls -la /kaggle/working/edgectl_*.zip
+import subprocess, json, glob, os
+subprocess.run("cd /kaggle/working && rm -f edgectl_results.zip && find edgectl -path '*canny_s*' \\( -name result.json -o -name sweep.json \\) | zip -q edgectl_results.zip -@", shell=True)
+for d in sorted(glob.glob("/kaggle/working/edgectl/canny_s*")):
+    try:
+        res = json.load(open(f"{d}/result.json")); sw = json.load(open(f"{d}/sweep.json")); sw = sw.get("summary", sw)
+        print(f"{os.path.basename(d):10s} AUROC {res['pixel_auroc']:.4f}  AP {res['pixel_ap']:.4f}  ODS-F1 {sw['ods_f1']['f1']:.4f}  MIoU {sw['best_miou']['miou']:.4f}")
+    except Exception:
+        print(f"{os.path.basename(d):10s} not finished")
+print(subprocess.run("ls -la /kaggle/working/edgectl_results.zip", shell=True, capture_output=True, text=True).stdout)
 ```
 
-Download `edgectl_results.zip` -> git directory, as always.
+Stage-1 losses will NOT look like the MNIST runs' 0.006x: Canny maps are sparser than digit
+strokes, so the loss scale differs. That is expected. Stages 2-3 use the usual crack data.
 
 ## What happens with the numbers (pre-committed, either way)
-
-Compare canny (3 seeds) against the full MNIST model (matched seeds 0-2) on all four
-metrics, Welch tests. Both outcomes are reportable:
-- MNIST >= Canny: the digit prior is at least as good as a hand-engineered edge prior —
-  a striking, counterintuitive support for the paper's premise. Goes into Sec. 4 as a
-  new control row + 2-3 sentences; limitation 5's "untested" clause updates.
-- Canny > MNIST: the honest finding becomes "a cross-domain edge prior is what matters,
-  and engineered edge maps are a stronger choice than digits"; the framing shifts and the
-  paper says so. Also publishable; arguably more useful.
-
-Optional extension if quota allows later: HED maps (needs the caffemodel; check that
-http://vcl.ucsd.edu/hed/hed_pretrained_bsds.caffemodel still exists before planning on it).
+Compare canny (3 seeds) to the full MNIST model on matched seeds 0-2, all four metrics,
+Welch tests. MNIST >= Canny: the digit prior matches or beats a hand-engineered edge prior --
+strong support for the premise; new control row + 2-3 sentences in Sec. 4, limitation 5
+updated. Canny > MNIST: the paper says so and reframes to "a cross-domain edge prior is what
+matters, and engineered edges are the stronger choice" -- still publishable.
