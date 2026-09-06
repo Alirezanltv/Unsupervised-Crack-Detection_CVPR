@@ -22,8 +22,9 @@ checkpoint; finished jobs are skipped; the smoke test re-runs (5 min).
 ```python
 import os, shutil, subprocess, importlib
 os.chdir("/kaggle/working/Unsupervised-Crack-Detection_CVPR")
-print(subprocess.run("git fetch origin && git reset --hard origin/main", shell=True,
-                     capture_output=True, text=True).stdout.strip()[-200:])
+g = subprocess.run("git fetch origin && git reset --hard origin/main", shell=True, capture_output=True, text=True)
+assert g.returncode == 0, "GIT SYNC FAILED (network or credentials):\n" + g.stderr[-600:]
+print(g.stdout.strip()[-200:])
 assert "--source-dir" in open("p0_reproduce/agdscae_ref.py").read(), "trainer lacks --source-dir: push the latest commits, then re-run"
 assert "--crops" in open("p1_edge_pretrain_control/make_edge_maps.py").read(), "generator lacks --crops: push the latest commits, then re-run"
 import torch
