@@ -1,0 +1,10 @@
+{
+  "checkpoint": "deepcrack_s0/ckpt_stage3.pt",
+  "total_params": 822941,
+  "per_module": {
+    "enc_s": 47071,
+    "enc_t": 47071,
+    "dec": 619399,
+    "gates": 109400
+  }
+}
