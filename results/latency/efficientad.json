@@ -1,0 +1,8 @@
+{
+  "model": "EfficientAd",
+  "input": "1x3x256x256",
+  "device": "Tesla T4",
+  "params_M": 8.059,
+  "ms_per_image": 37.51,
+  "iters": 30
+}

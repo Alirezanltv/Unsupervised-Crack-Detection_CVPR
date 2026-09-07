@@ -1,0 +1,12 @@
+{
+  "name": "dinov2_vits14",
+  "backbone": "vits14",
+  "input_size": 448,
+  "patch_grid": 32,
+  "bank_tokens": 256000,
+  "embed_dim": 384,
+  "k": 1,
+  "bank": "all training patches",
+  "device": "Tesla T4",
+  "ms_per_image_incl_io": 145.31
+}

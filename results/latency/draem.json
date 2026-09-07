@@ -1,0 +1,8 @@
+{
+  "model": "Draem",
+  "input": "1x3x256x256",
+  "device": "Tesla T4",
+  "params_M": 97.423,
+  "ms_per_image": 84.11,
+  "iters": 30
+}

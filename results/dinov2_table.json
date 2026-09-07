@@ -18,8 +18,54 @@
         "std": 0.02
       }
     },
-    "dinov2_vits14": "PENDING",
-    "dinov2_vitb14": "PENDING"
+    "dinov2_vits14": {
+      "auroc": 0.4912,
+      "ap": 0.054,
+      "ods_f1": 0.1093,
+      "ods_miou": 0.4861,
+      "one_sample_t_vs_ours": {
+        "auroc": {
+          "ours_minus_dinov2": 0.4138,
+          "p": 0.0
+        },
+        "ap": {
+          "ours_minus_dinov2": 0.2891,
+          "p": 0.002
+        },
+        "ods_f1": {
+          "ours_minus_dinov2": 0.3376,
+          "p": 0.0
+        },
+        "ods_miou": {
+          "ours_minus_dinov2": 0.1257,
+          "p": 0.0001
+        }
+      }
+    },
+    "dinov2_vitb14": {
+      "auroc": 0.4601,
+      "ap": 0.0432,
+      "ods_f1": 0.0857,
+      "ods_miou": 0.4782,
+      "one_sample_t_vs_ours": {
+        "auroc": {
+          "ours_minus_dinov2": 0.4449,
+          "p": 0.0
+        },
+        "ap": {
+          "ours_minus_dinov2": 0.2999,
+          "p": 0.0017
+        },
+        "ods_f1": {
+          "ours_minus_dinov2": 0.3612,
+          "p": 0.0
+        },
+        "ods_miou": {
+          "ours_minus_dinov2": 0.1336,
+          "p": 0.0001
+        }
+      }
+    }
   },
   "concrete": {
     "ours": {
@@ -40,7 +86,53 @@
         "std": 0.0038
       }
     },
-    "dinov2_vits14": "PENDING",
-    "dinov2_vitb14": "PENDING"
+    "dinov2_vits14": {
+      "auroc": 0.4878,
+      "ap": 0.0126,
+      "ods_f1": 0.028,
+      "ods_miou": 0.294,
+      "one_sample_t_vs_ours": {
+        "auroc": {
+          "ours_minus_dinov2": 0.269,
+          "p": 0.0008
+        },
+        "ap": {
+          "ours_minus_dinov2": 0.1079,
+          "p": 0.0159
+        },
+        "ods_f1": {
+          "ours_minus_dinov2": 0.199,
+          "p": 0.0019
+        },
+        "ods_miou": {
+          "ours_minus_dinov2": 0.252,
+          "p": 0.0001
+        }
+      }
+    },
+    "dinov2_vitb14": {
+      "auroc": 0.3694,
+      "ap": 0.0102,
+      "ods_f1": 0.0272,
+      "ods_miou": 0.4769,
+      "one_sample_t_vs_ours": {
+        "auroc": {
+          "ours_minus_dinov2": 0.3874,
+          "p": 0.0004
+        },
+        "ap": {
+          "ours_minus_dinov2": 0.1102,
+          "p": 0.0152
+        },
+        "ods_f1": {
+          "ours_minus_dinov2": 0.1997,
+          "p": 0.0019
+        },
+        "ods_miou": {
+          "ours_minus_dinov2": 0.0691,
+          "p": 0.001
+        }
+      }
+    }
   }
 }

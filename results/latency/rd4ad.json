@@ -1,0 +1,8 @@
+{
+  "model": "ReverseDistillation",
+  "input": "1x3x256x256",
+  "device": "Tesla T4",
+  "params_M": 89.002,
+  "ms_per_image": 21.5,
+  "iters": 30
+}

@@ -1,0 +1,8 @@
+{
+  "model": "Padim",
+  "input": "1x3x256x256",
+  "device": "Tesla T4",
+  "params_M": 2.783,
+  "ms_per_image": 3.87,
+  "iters": 30
+}

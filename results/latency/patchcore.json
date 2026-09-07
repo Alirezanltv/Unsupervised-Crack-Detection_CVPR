@@ -1,0 +1,8 @@
+{
+  "model": "Patchcore",
+  "input": "1x3x256x256",
+  "device": "Tesla T4",
+  "params_M": 24.863,
+  "ms_per_image": 25.26,
+  "iters": 30
+}
