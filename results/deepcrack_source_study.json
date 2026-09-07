@@ -1,0 +1,138 @@
+{
+  "protocol": "DeepCrack, full pipeline, seeds 0-2; only the stage-1 source differs",
+  "sources": {
+    "target_only": {
+      "auroc": {
+        "mean": 0.8573,
+        "std": 0.0356
+      },
+      "ap": {
+        "mean": 0.3861,
+        "std": 0.1391
+      },
+      "ods_f1": {
+        "mean": 0.4311,
+        "std": 0.0974
+      },
+      "ods_miou": {
+        "mean": 0.6144,
+        "std": 0.0448
+      }
+    },
+    "canny_maps": {
+      "auroc": {
+        "mean": 0.7495,
+        "std": 0.0172
+      },
+      "ap": {
+        "mean": 0.1225,
+        "std": 0.0062
+      },
+      "ods_f1": {
+        "mean": 0.1984,
+        "std": 0.0114
+      },
+      "ods_miou": {
+        "mean": 0.5198,
+        "std": 0.0016
+      }
+    },
+    "strokes": "PENDING",
+    "mnist": {
+      "auroc": {
+        "mean": 0.911,
+        "std": 0.0191
+      },
+      "ap": {
+        "mean": 0.3735,
+        "std": 0.1122
+      },
+      "ods_f1": {
+        "mean": 0.4529,
+        "std": 0.0476
+      },
+      "ods_miou": {
+        "mean": 0.616,
+        "std": 0.0271
+      }
+    }
+  },
+  "welch_vs_mnist": {
+    "target_only": {
+      "auroc": {
+        "delta": -0.0537,
+        "p": 0.1025,
+        "seed_matched": [
+          -0.0413,
+          -0.0734,
+          -0.0464
+        ]
+      },
+      "ap": {
+        "delta": 0.0126,
+        "p": 0.9091,
+        "seed_matched": [
+          0.0146,
+          -0.0317,
+          0.0549
+        ]
+      },
+      "ods_f1": {
+        "delta": -0.0217,
+        "p": 0.7521,
+        "seed_matched": [
+          0.0103,
+          -0.0827,
+          0.0072
+        ]
+      },
+      "ods_miou": {
+        "delta": -0.0016,
+        "p": 0.9615,
+        "seed_matched": [
+          0.0082,
+          -0.0244,
+          0.0115
+        ]
+      }
+    },
+    "canny_maps": {
+      "auroc": {
+        "delta": -0.1615,
+        "p": 0.0004,
+        "seed_matched": [
+          -0.1995,
+          -0.1273,
+          -0.1576
+        ]
+      },
+      "ap": {
+        "delta": -0.251,
+        "p": 0.0602,
+        "seed_matched": [
+          -0.3719,
+          -0.1352,
+          -0.2459
+        ]
+      },
+      "ods_f1": {
+        "delta": -0.2545,
+        "p": 0.0085,
+        "seed_matched": [
+          -0.2893,
+          -0.2106,
+          -0.2635
+        ]
+      },
+      "ods_miou": {
+        "delta": -0.0962,
+        "p": 0.0251,
+        "seed_matched": [
+          -0.1215,
+          -0.0698,
+          -0.0973
+        ]
+      }
+    }
+  }
+}

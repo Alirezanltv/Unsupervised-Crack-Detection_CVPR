@@ -1,0 +1,46 @@
+{
+  "deepcrack": {
+    "ours": {
+      "auroc": {
+        "mean": 0.905,
+        "std": 0.0166
+      },
+      "ap": {
+        "mean": 0.3432,
+        "std": 0.0899
+      },
+      "ods_f1": {
+        "mean": 0.4469,
+        "std": 0.0346
+      },
+      "ods_miou": {
+        "mean": 0.6118,
+        "std": 0.02
+      }
+    },
+    "dinov2_vits14": "PENDING",
+    "dinov2_vitb14": "PENDING"
+  },
+  "concrete": {
+    "ours": {
+      "auroc": {
+        "mean": 0.7568,
+        "std": 0.0134
+      },
+      "ap": {
+        "mean": 0.1205,
+        "std": 0.0238
+      },
+      "ods_f1": {
+        "mean": 0.227,
+        "std": 0.0152
+      },
+      "ods_miou": {
+        "mean": 0.546,
+        "std": 0.0038
+      }
+    },
+    "dinov2_vits14": "PENDING",
+    "dinov2_vitb14": "PENDING"
+  }
+}
