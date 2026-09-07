@@ -74,6 +74,11 @@ def main():
     ap.add_argument("--k", type=int, default=1)
     ap.add_argument("--batch", type=int, default=8)
     ap.add_argument("--name", default=None, help="run name (default dinov2_<backbone>)")
+    ap.add_argument("--exclude-masks", type=Path, default=None,
+                    help="ORACLE DIAGNOSTIC ONLY: directory of training masks (same stems); "
+                         "patches overlapping a mask are dropped from the memory bank. Uses "
+                         "labels, so it is never a baseline -- it quantifies how much the "
+                         "contaminated normal set costs a frozen-feature k-NN detector.")
     a = ap.parse_args()
     dev = "cuda" if torch.cuda.is_available() else "cpu"
     name = a.name or f"dinov2_{a.backbone}"
@@ -84,7 +89,20 @@ def main():
     bank = []
     train = list_images(a.data / "train/good")
     for i in range(0, len(train), a.batch):
-        bank.append(tokens(model, load_batch(train[i:i + a.batch], a.size, dev)).reshape(-1, model.embed_dim))
+        ps = train[i:i + a.batch]
+        t = tokens(model, load_batch(ps, a.size, dev))          # B x N x D
+        if a.exclude_masks is None:
+            bank.append(t.reshape(-1, model.embed_dim))
+        else:
+            for j, p in enumerate(ps):
+                m = None
+                for ext in (".png", ".bmp", ".jpg"):
+                    if (a.exclude_masks / (p.stem + ext)).exists():
+                        m = Image.open(a.exclude_masks / (p.stem + ext)).convert("L").resize((grid, grid), Image.BILINEAR)
+                        break
+                keep = torch.ones(t.shape[1], dtype=torch.bool, device=dev) if m is None else \
+                    torch.from_numpy(~(np.asarray(m) > 0).reshape(-1)).to(dev)
+                bank.append(t[j][keep])
     bank = torch.cat(bank)
     print(f"{name}: bank {tuple(bank.shape)} from {len(train)} images on {dev}", flush=True)
 
@@ -112,6 +130,7 @@ def main():
     (root / "latency.json").write_text(json.dumps({
         "name": name, "backbone": a.backbone, "input_size": a.size, "patch_grid": grid,
         "bank_tokens": int(bank.shape[0]), "embed_dim": int(bank.shape[1]), "k": a.k,
+        "bank": "crack-free patches only (oracle diagnostic, training masks used)" if a.exclude_masks else "all training patches",
         "device": torch.cuda.get_device_name(0) if dev == "cuda" else "cpu",
         "ms_per_image_incl_io": round(1000 * float(np.mean(lat[2:])), 2)}, indent=2))
     print("done", name)

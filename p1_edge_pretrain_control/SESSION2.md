@@ -8,6 +8,11 @@ Three review objections answered in one T4x2 session (~6.5 h):
 2. "Where is the foundation-model baseline?" -> frozen DINOv2 ViT-S/14 and ViT-B/14 patch
    features + nearest-neighbour scoring (the PatchCore recipe on DINOv2), 448 input =
    32x32 patch grid, on DeepCrack AND the concrete clean-normal arm. Deterministic.
+   Plus one ORACLE DIAGNOSTIC row (DeepCrack, ViT-S, bank built from crack-free patches
+   using the training masks): a CPU pre-check showed the contaminated bank scores cracks
+   as MORE normal than background (AUROC 0.41, below chance) while the crack-free bank
+   scores them correctly (0.65 at 224 input) -- the contamination effect, measured on a
+   foundation-model detector. Never a baseline (uses labels); reported as a diagnostic.
 3. "No latency numbers" -> forward latency of every baseline on the T4 (1-epoch fits;
    latency does not depend on weights), of AG-DSCAE's full scoring path, and of DINOv2.
 
@@ -28,7 +33,7 @@ os.chdir("/kaggle/working/Unsupervised-Crack-Detection_CVPR")
 g = subprocess.run("git fetch origin && git reset --hard origin/main", shell=True, capture_output=True, text=True)
 assert g.returncode == 0, "GIT SYNC FAILED:\n" + g.stderr[-600:]
 for f, tok in (("p1_edge_pretrain_control/make_stroke_source.py", "def render"),
-               ("p1_sota_baselines/dinov2_knn.py", "x_norm_patchtokens"),
+               ("p1_sota_baselines/dinov2_knn.py", "--exclude-masks"),
                ("p1_sota_baselines/run_baselines.py", "--time-only")):
     assert tok in open(f).read(), f"{f} is stale: push the latest commits, then re-run"
 import torch
@@ -103,6 +108,11 @@ def dino_job():
             r = f"{RUNS}/{tag}/dinov2_{bb}/s0"
             cmds.append(f"python -u p1_sota_baselines/dinov2_knn.py --data {data} --out {RUNS}/{tag} --backbone {bb} --size 448 && "
                         + score(f"{r}/maps", f"{r}/calib", data, f"{OUT}/{tag}_dinov2_{bb}") + f" && cp {r}/latency.json {OUT}/{tag}_dinov2_{bb}/")
+    # oracle diagnostic on DeepCrack: same DINOv2-S, bank built from crack-free patches only
+    r = f"{RUNS}/deepcrack/dinov2_vits14_cleanbank/s0"
+    cmds.append(f"python -u p1_sota_baselines/dinov2_knn.py --data {DC} --out {RUNS}/deepcrack --backbone vits14 --size 448 "
+                f"--name dinov2_vits14_cleanbank --exclude-masks {RAW}/train_lab && "
+                + score(f"{r}/maps", f"{r}/calib", DC, f"{OUT}/deepcrack_dinov2_vits14_cleanbank"))
     return " && ".join(cmds)
 
 def latency_job():
