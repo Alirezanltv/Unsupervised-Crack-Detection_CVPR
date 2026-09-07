@@ -1,0 +1,194 @@
+{
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "note": "Variance-homogeneity tests behind the ablation's seed-spread remark (main paper Sec. 4.6).",
+  "tests": {
+    "auroc": {
+      "target_only_vs_full/mean": {
+        "W": 1.157,
+        "p": 0.3427,
+        "std_a": 0.0356,
+        "std_b": 0.0191
+      },
+      "target_only_vs_full/median": {
+        "W": 0.552,
+        "p": 0.4987,
+        "std_a": 0.0356,
+        "std_b": 0.0191
+      },
+      "target_only_vs_pretraining/mean": {
+        "W": 1.514,
+        "p": 0.286,
+        "std_a": 0.0356,
+        "std_b": 0.0169
+      },
+      "target_only_vs_pretraining/median": {
+        "W": 0.746,
+        "p": 0.4365,
+        "std_a": 0.0356,
+        "std_b": 0.0169
+      },
+      "ot_vs_full/mean": {
+        "W": 2.14,
+        "p": 0.2174,
+        "std_a": 0.0347,
+        "std_b": 0.0191
+      },
+      "ot_vs_full/median": {
+        "W": 0.203,
+        "p": 0.6758,
+        "std_a": 0.0347,
+        "std_b": 0.0191
+      },
+      "all_four/mean": {
+        "W": 1.191,
+        "p": 0.3729
+      },
+      "all_four/median": {
+        "W": 0.269,
+        "p": 0.8463
+      }
+    },
+    "ap": {
+      "target_only_vs_full/mean": {
+        "W": 0.276,
+        "p": 0.6271,
+        "std_a": 0.1391,
+        "std_b": 0.1122
+      },
+      "target_only_vs_full/median": {
+        "W": 0.053,
+        "p": 0.8287,
+        "std_a": 0.1391,
+        "std_b": 0.1122
+      },
+      "target_only_vs_pretraining/mean": {
+        "W": 0.444,
+        "p": 0.5416,
+        "std_a": 0.1391,
+        "std_b": 0.1036
+      },
+      "target_only_vs_pretraining/median": {
+        "W": 0.105,
+        "p": 0.762,
+        "std_a": 0.1391,
+        "std_b": 0.1036
+      },
+      "ot_vs_full/mean": {
+        "W": 0.278,
+        "p": 0.6261,
+        "std_a": 0.1321,
+        "std_b": 0.1122
+      },
+      "ot_vs_full/median": {
+        "W": 0.011,
+        "p": 0.9225,
+        "std_a": 0.1321,
+        "std_b": 0.1122
+      },
+      "all_four/mean": {
+        "W": 0.244,
+        "p": 0.8633
+      },
+      "all_four/median": {
+        "W": 0.035,
+        "p": 0.9904
+      }
+    },
+    "ods_f1": {
+      "target_only_vs_full/mean": {
+        "W": 2.078,
+        "p": 0.2228,
+        "std_a": 0.0974,
+        "std_b": 0.0476
+      },
+      "target_only_vs_full/median": {
+        "W": 0.516,
+        "p": 0.5122,
+        "std_a": 0.0974,
+        "std_b": 0.0476
+      },
+      "target_only_vs_pretraining/mean": {
+        "W": 2.208,
+        "p": 0.2115,
+        "std_a": 0.0974,
+        "std_b": 0.046
+      },
+      "target_only_vs_pretraining/median": {
+        "W": 0.557,
+        "p": 0.4969,
+        "std_a": 0.0974,
+        "std_b": 0.046
+      },
+      "ot_vs_full/mean": {
+        "W": 2.044,
+        "p": 0.226,
+        "std_a": 0.0835,
+        "std_b": 0.0476
+      },
+      "ot_vs_full/median": {
+        "W": 0.138,
+        "p": 0.7288,
+        "std_a": 0.0835,
+        "std_b": 0.0476
+      },
+      "all_four/mean": {
+        "W": 1.448,
+        "p": 0.2995
+      },
+      "all_four/median": {
+        "W": 0.229,
+        "p": 0.874
+      }
+    },
+    "ods_miou": {
+      "target_only_vs_full/mean": {
+        "W": 1.155,
+        "p": 0.3429,
+        "std_a": 0.0448,
+        "std_b": 0.0271
+      },
+      "target_only_vs_full/median": {
+        "W": 0.284,
+        "p": 0.6221,
+        "std_a": 0.0448,
+        "std_b": 0.0271
+      },
+      "target_only_vs_pretraining/mean": {
+        "W": 1.223,
+        "p": 0.3307,
+        "std_a": 0.0448,
+        "std_b": 0.0263
+      },
+      "target_only_vs_pretraining/median": {
+        "W": 0.316,
+        "p": 0.604,
+        "std_a": 0.0448,
+        "std_b": 0.0263
+      },
+      "ot_vs_full/mean": {
+        "W": 1.596,
+        "p": 0.2751,
+        "std_a": 0.0437,
+        "std_b": 0.0271
+      },
+      "ot_vs_full/median": {
+        "W": 0.076,
+        "p": 0.7959,
+        "std_a": 0.0437,
+        "std_b": 0.0271
+      },
+      "all_four/mean": {
+        "W": 0.931,
+        "p": 0.4692
+      },
+      "all_four/median": {
+        "W": 0.113,
+        "p": 0.95
+      }
+    }
+  }
+}
