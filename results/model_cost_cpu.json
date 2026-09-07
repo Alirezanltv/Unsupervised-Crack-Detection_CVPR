@@ -1,0 +1,11 @@
+{
+  "device": "cpu",
+  "input": "1x3x256x256",
+  "params": 820049,
+  "params_M": 0.82,
+  "macs": 3062497280,
+  "gmacs": 3.062,
+  "gflops_2x": 6.125,
+  "latency_ms_full_score_path": 127.92,
+  "iters": 10
+}
