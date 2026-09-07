@@ -1,0 +1,168 @@
+{
+  "protocol": "stage 1 on 20,000 Canny (50/150) maps of 256^2 seeded crops of BSDS500 images (500 images x 40 crops, seed 2027) in place of the 20,000-digit MNIST subset; no upsampling (maps born at 256^2); stages 2-3, splits, scoring, sweeps identical; seeds 0-2",
+  "source_statistics": {
+    "canny_maps": "binary by construction: 2 gray levels, 1-px edge transitions",
+    "mnist_upsampled_stage1_input": {
+      "mean_intensity": 0.1337,
+      "frac_pixels_gt_0.5": 0.1331,
+      "frac_pixels_gt_0.05": 0.2035,
+      "distinct_gray_levels_per_image": 101,
+      "edge_transition_px": 10.8,
+      "n_digits_measured": 300
+    }
+  },
+  "models": {
+    "canny_source": {
+      "auroc": {
+        "mean": 0.7495,
+        "std": 0.0172,
+        "n_seeds": 3
+      },
+      "ap": {
+        "mean": 0.1225,
+        "std": 0.0062,
+        "n_seeds": 3
+      },
+      "ods_f1": {
+        "mean": 0.1984,
+        "std": 0.0114,
+        "n_seeds": 3
+      },
+      "ods_miou": {
+        "mean": 0.5198,
+        "std": 0.0016,
+        "n_seeds": 3
+      }
+    },
+    "mnist_full_seeds_0_2": {
+      "auroc": {
+        "mean": 0.911,
+        "std": 0.0191,
+        "n_seeds": 3
+      },
+      "ap": {
+        "mean": 0.3735,
+        "std": 0.1122,
+        "n_seeds": 3
+      },
+      "ods_f1": {
+        "mean": 0.4529,
+        "std": 0.0476,
+        "n_seeds": 3
+      },
+      "ods_miou": {
+        "mean": 0.616,
+        "std": 0.0271,
+        "n_seeds": 3
+      }
+    },
+    "target_only": {
+      "auroc": {
+        "mean": 0.8573,
+        "std": 0.0356,
+        "n_seeds": 3
+      },
+      "ap": {
+        "mean": 0.3861,
+        "std": 0.1391,
+        "n_seeds": 3
+      },
+      "ods_f1": {
+        "mean": 0.4311,
+        "std": 0.0974,
+        "n_seeds": 3
+      },
+      "ods_miou": {
+        "mean": 0.6144,
+        "std": 0.0448,
+        "n_seeds": 3
+      }
+    }
+  },
+  "welch": {
+    "canny_vs_mnist_full": {
+      "auroc": {
+        "delta": -0.1615,
+        "t": -10.881,
+        "p": 0.0004,
+        "seed_matched_diffs": [
+          -0.1995,
+          -0.1273,
+          -0.1576
+        ]
+      },
+      "ap": {
+        "delta": -0.251,
+        "t": -3.868,
+        "p": 0.0602,
+        "seed_matched_diffs": [
+          -0.3719,
+          -0.1352,
+          -0.2459
+        ]
+      },
+      "ods_f1": {
+        "delta": -0.2545,
+        "t": -9.005,
+        "p": 0.0085,
+        "seed_matched_diffs": [
+          -0.2893,
+          -0.2106,
+          -0.2635
+        ]
+      },
+      "ods_miou": {
+        "delta": -0.0962,
+        "t": -6.136,
+        "p": 0.0251,
+        "seed_matched_diffs": [
+          -0.1215,
+          -0.0698,
+          -0.0973
+        ]
+      }
+    },
+    "canny_vs_target_only": {
+      "auroc": {
+        "delta": -0.1077,
+        "t": -4.726,
+        "p": 0.0196,
+        "seed_matched_diffs": [
+          -0.1582,
+          -0.0539,
+          -0.1112
+        ]
+      },
+      "ap": {
+        "delta": -0.2636,
+        "t": -3.279,
+        "p": 0.0813,
+        "seed_matched_diffs": [
+          -0.3865,
+          -0.1035,
+          -0.3008
+        ]
+      },
+      "ods_f1": {
+        "delta": -0.2327,
+        "t": -4.112,
+        "p": 0.0519,
+        "seed_matched_diffs": [
+          -0.2996,
+          -0.1279,
+          -0.2707
+        ]
+      },
+      "ods_miou": {
+        "delta": -0.0946,
+        "t": -3.653,
+        "p": 0.0672,
+        "seed_matched_diffs": [
+          -0.1297,
+          -0.0453,
+          -0.1088
+        ]
+      }
+    }
+  }
+}
