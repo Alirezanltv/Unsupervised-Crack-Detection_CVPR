@@ -56,9 +56,37 @@ def build_model(name: str, kwargs: dict | None = None):
     return cls(**(kwargs or {}))
 
 
+def time_forward(model, image_size: int, out_json: Path, iters: int = 30):
+    """Wall-clock latency of the fitted model's forward pass on single images.
+    Latency does not depend on the fitted weights, only on the architecture and
+    the populated memory bank / statistics, so a short fit suffices."""
+    import time, torch
+    dev = "cuda" if torch.cuda.is_available() else "cpu"
+    net = model.model.to(dev).eval()
+    x = torch.rand(1, 3, image_size, image_size, device=dev)
+    with torch.no_grad():
+        for _ in range(5):
+            net(x)
+        if dev == "cuda":
+            torch.cuda.synchronize()
+        t0 = time.perf_counter()
+        for _ in range(iters):
+            net(x)
+        if dev == "cuda":
+            torch.cuda.synchronize()
+        ms = (time.perf_counter() - t0) / iters * 1000
+    params = sum(p.numel() for p in net.parameters())
+    rec = {"model": type(model).__name__, "input": f"1x3x{image_size}x{image_size}",
+           "device": torch.cuda.get_device_name(0) if dev == "cuda" else "cpu",
+           "params_M": round(params / 1e6, 3), "ms_per_image": round(ms, 2), "iters": iters}
+    out_json.parent.mkdir(parents=True, exist_ok=True)
+    out_json.write_text(json.dumps(rec, indent=2))
+    print("latency:", rec, flush=True)
+
+
 def run_one(model_name: str, data: Path, out: Path, seed: int, image_size: int,
             batch: int | None = None, max_epochs: int | None = None,
-            model_kwargs: dict | None = None):
+            model_kwargs: dict | None = None, time_only: bool = False):
     import torch
     from anomalib.data import Folder
     from anomalib.engine import Engine
@@ -81,6 +109,9 @@ def run_one(model_name: str, data: Path, out: Path, seed: int, image_size: int,
     engine = Engine(default_root_dir=out / model_name / f"s{seed}",
                     **({"max_epochs": max_epochs} if max_epochs else {}))
     engine.fit(model=model, datamodule=datamodule)
+    if time_only:
+        time_forward(model, image_size, out / model_name / f"s{seed}" / "latency.json")
+        return
 
     maps_dir = out / model_name / f"s{seed}" / "maps"
     maps_dir.mkdir(parents=True, exist_ok=True)
@@ -122,6 +153,8 @@ def main():
                     help="override train/eval batch size (e.g. 8 for DRAEM on a T4)")
     ap.add_argument("--max-epochs", type=int, default=None,
                     help="cap trainer epochs for models that train (e.g. 300 for DRAEM)")
+    ap.add_argument("--time-only", action="store_true",
+                    help="fit (use --max-epochs 1) and record forward latency only; no maps")
     ap.add_argument("--model-kwargs", type=str, default=None,
                     help='JSON passed to the model constructor, e.g. '
                          '\'{"anomaly_source_path": "/path/to/dtd/images"}\' for DRAEM')
@@ -132,7 +165,8 @@ def main():
             print(f"=== {m} seed {s} ===")
             run_one(m, args.data, args.out, s, args.image_size,
                     args.batch, args.max_epochs,
-                    json.loads(args.model_kwargs) if args.model_kwargs else None)
+                    json.loads(args.model_kwargs) if args.model_kwargs else None,
+                    args.time_only)
 
 
 if __name__ == "__main__":
