@@ -19,6 +19,11 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 
+# Equation numbers of the main paper (main.tex) that the schematics quote. Keep in
+# step with main.tex; CVPR2027_submission/check_eq_numbers.py verifies the rendered
+# PDFs against main.aux.
+EQ = {"cost": 2, "blend": 6, "crackmap": 11}
+
 CH = [32, 64, 128, 256]
 RES = [256, 128, 64, 32]
 INK, ACC, ACC2, GRAY = "#1f2d3d", "#c0392b", "#2e86ab", "#7f8c8d"
@@ -51,7 +56,7 @@ def architecture(out):
         box(ax, x - 0.36, 2.45, 0.72, 0.5, f"gate $a_{i+1}$", fc="#fdecea", ec=ACC, fs=7)
         arrow(ax, (x, 3.15), (x, 2.95), color=ACC, lw=0.9)
         arrow(ax, (x, 2.25), (x, 2.45), color=ACC, lw=0.9)
-    ax.text(5.5, 2.7, "$\\tilde h_i = a_i\\, h_i^s + (1-a_i)\\, h_i^t$   (Eq. 8)", fontsize=8, color=ACC, va="center")
+    ax.text(5.5, 2.7, f"$\\tilde h_i = a_i\\, h_i^s + (1-a_i)\\, h_i^t$   (Eq. {EQ['blend']})", fontsize=8, color=ACC, va="center")
     box(ax, 5.55, 1.55, 1.15, 0.7, "bottleneck\n256 ch, 16$^2$", fc="white", fs=7)
     arrow(ax, (0.15 + 3 * 1.32 + 1.12, 1.9), (5.55, 1.9))
     ax.text(5.55, 2.36, "OT loss on $z^s, z^t$ (stages 2-3)", fontsize=6.8, color=ACC2, style="italic")
@@ -66,7 +71,7 @@ def architecture(out):
     ax.text(10.12, 2.6, "concatenated skips:\nblended $\\tilde h_i$ at the\nmatching scale", fontsize=6.8, color=GRAY, va="center")
     box(ax, 8.2, 0.45, 1.75, 0.45, "1x1 conv + sigmoid", fc="white", fs=7)
     arrow(ax, (9.075, 1.25), (9.075, 0.9))
-    ax.text(10.12, 0.67, "$\\hat x$ (3 x 256 x 256); score =\nsmoothed $\\|\\nabla x - \\nabla \\hat x\\|$ (Eq. 14)", fontsize=6.8, color=INK, va="center")
+    ax.text(10.12, 0.67, f"$\\hat x$ (3 x 256 x 256); score =\nsmoothed $\\|\\nabla x - \\nabla \\hat x\\|$ (Eq. {EQ['crackmap']})", fontsize=6.8, color=INK, va="center")
     ax.text(0.15, 0.55, "Every DS-conv block: depthwise 3x3 -> pointwise 1x1 -> BN -> ReLU -> dropout 0.1.   0.82 M parameters in total.",
             fontsize=7, color=GRAY)
     fig.savefig(out / "architecture.pdf", bbox_inches="tight")
@@ -79,7 +84,7 @@ def pipeline(out):
     stages = [("Stage 1: source pretraining", "#eef2f7",
                "MNIST digits, 28$^2$ -> 256$^2$ bicubic\nMSE + 0.5 edge loss, 50 epochs\ntrains $E_s$, $D$; $E_s$ then frozen"),
               ("Stage 2: OT alignment", "#eefaf1",
-               "unlabeled crack images\n$E_t$ init from $E_s$; MSE + 0.1 OT + 0.3 edge\nstructure-preserving cost (Eq. 4)"),
+               f"unlabeled crack images\n$E_t$ init from $E_s$; MSE + 0.1 OT + 0.3 edge\nstructure-preserving cost (Eq. {EQ['cost']})"),
               ("Stage 3: gated adaptation", "#fdecea",
                "gates $a_1..a_4$ inserted\n(1-SSIM) + 0.05 OT + 0.01 entropy + 0.3 edge\ntrains $E_t$, $D$, gates")]
     for i, (title, fc, body) in enumerate(stages):
@@ -89,7 +94,7 @@ def pipeline(out):
         ax.text(x + 1.425, 0.95, body, ha="center", va="center", fontsize=7, color=INK)
         if i < 2:
             arrow(ax, (x + 2.85, 1.15), (x + 3.25, 1.15), lw=1.2)
-    ax.text(5.0, 0.12, "Inference: crack map = standardized, Gaussian-smoothed gradient reconstruction error (Eq. 14); calibration from 50 unlabeled images.",
+    ax.text(5.0, 0.12, f"Inference: crack map = standardized, Gaussian-smoothed gradient reconstruction error (Eq. {EQ['crackmap']}); calibration from 50 unlabeled images.",
             ha="center", fontsize=7, color=GRAY)
     fig.savefig(out / "pipeline.pdf", bbox_inches="tight")
     plt.close(fig)
